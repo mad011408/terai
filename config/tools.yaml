@@ -1,0 +1,232 @@
+# Tool Configuration
+# AI Terminal Agent - Tool Definitions
+
+tools:
+  # Data Tools
+  web_search:
+    name: web_search
+    category: data
+    enabled: true
+    description: Search the web for information
+    timeout: 30
+    rate_limit: 60  # per minute
+    requires_confirmation: false
+    parameters:
+      query:
+        type: string
+        required: true
+        max_length: 500
+      num_results:
+        type: integer
+        required: false
+        default: 10
+        min: 1
+        max: 50
+
+  database_query:
+    name: database_query
+    category: data
+    enabled: true
+    description: Query databases
+    timeout: 60
+    requires_confirmation: true
+    parameters:
+      query:
+        type: string
+        required: true
+      database:
+        type: string
+        required: true
+      read_only:
+        type: boolean
+        default: true
+
+  file_reader:
+    name: file_reader
+    category: data
+    enabled: true
+    description: Read files from the filesystem
+    timeout: 30
+    requires_confirmation: false
+    parameters:
+      path:
+        type: string
+        required: true
+      encoding:
+        type: string
+        default: utf-8
+      max_size_mb:
+        type: number
+        default: 10
+
+  # Action Tools
+  terminal_executor:
+    name: terminal_executor
+    category: action
+    enabled: true
+    description: Execute shell commands
+    timeout: 120
+    requires_confirmation: true
+    risk_level: high
+    parameters:
+      command:
+        type: string
+        required: true
+      working_directory:
+        type: string
+        required: false
+      timeout:
+        type: number
+        default: 60
+    blocked_patterns:
+      - "rm -rf /"
+      - "rm -rf /*"
+      - ":(){ :|:& };:"
+      - "> /dev/sda"
+      - "mkfs"
+      - "dd if=/dev"
+
+  code_executor:
+    name: code_executor
+    category: action
+    enabled: true
+    description: Execute code in various languages
+    timeout: 300
+    requires_confirmation: true
+    risk_level: high
+    parameters:
+      code:
+        type: string
+        required: true
+      language:
+        type: string
+        required: true
+        allowed:
+          - python
+          - javascript
+          - bash
+          - ruby
+      sandbox:
+        type: boolean
+        default: true
+
+  file_writer:
+    name: file_writer
+    category: action
+    enabled: true
+    description: Write files to the filesystem
+    timeout: 30
+    requires_confirmation: true
+    risk_level: medium
+    parameters:
+      path:
+        type: string
+        required: true
+      content:
+        type: string
+        required: true
+      mode:
+        type: string
+        default: write
+        allowed:
+          - write
+          - append
+      create_backup:
+        type: boolean
+        default: true
+
+  api_caller:
+    name: api_caller
+    category: action
+    enabled: true
+    description: Make HTTP API calls
+    timeout: 60
+    requires_confirmation: false
+    rate_limit: 30
+    parameters:
+      url:
+        type: string
+        required: true
+      method:
+        type: string
+        default: GET
+        allowed:
+          - GET
+          - POST
+          - PUT
+          - DELETE
+          - PATCH
+      headers:
+        type: object
+        required: false
+      body:
+        type: string
+        required: false
+
+  # Orchestration Tools
+  agent_handoff:
+    name: agent_handoff
+    category: orchestration
+    enabled: true
+    description: Hand off task to another agent
+    timeout: 10
+    requires_confirmation: false
+    parameters:
+      target_agent:
+        type: string
+        required: true
+      task:
+        type: string
+        required: true
+      context:
+        type: object
+        required: false
+
+  subprocess_manager:
+    name: subprocess_manager
+    category: orchestration
+    enabled: true
+    description: Manage background processes
+    timeout: 300
+    requires_confirmation: true
+    parameters:
+      action:
+        type: string
+        required: true
+        allowed:
+          - start
+          - stop
+          - status
+          - list
+          - wait
+          - output
+      command:
+        type: string
+        required: false
+      process_id:
+        type: string
+        required: false
+
+# Tool categories
+categories:
+  data:
+    description: Tools for reading and retrieving data
+    default_timeout: 30
+    requires_confirmation: false
+  action:
+    description: Tools that perform actions or modifications
+    default_timeout: 60
+    requires_confirmation: true
+  orchestration:
+    description: Tools for coordinating between agents
+    default_timeout: 300
+    requires_confirmation: false
+
+# Global tool settings
+settings:
+  max_concurrent_tools: 5
+  default_timeout: 60
+  enable_tool_caching: true
+  cache_ttl: 300
+  sandbox_mode: true
+  audit_logging: true

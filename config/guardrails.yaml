@@ -1,0 +1,232 @@
+# Guardrails Configuration
+# AI Terminal Agent - Safety and Validation Settings
+
+# Input Guardrails
+input:
+  enabled: true
+  max_length: 10000
+
+  # Prompt injection detection
+  injection_detection:
+    enabled: true
+    sensitivity: medium  # low, medium, high
+    patterns:
+      - "ignore previous instructions"
+      - "disregard all prior"
+      - "you are now"
+      - "pretend to be"
+      - "act as if"
+      - "system prompt:"
+      - "\\[INST\\]"
+      - "<|im_start|>"
+    block_on_detection: true
+
+  # Content filtering
+  content_filter:
+    enabled: true
+    block_explicit: true
+    block_violence: true
+    block_illegal: true
+    allowed_languages:
+      - en
+      - hi
+      - es
+      - fr
+      - de
+      - zh
+      - ja
+
+  # Rate limiting
+  rate_limit:
+    enabled: true
+    max_requests_per_minute: 60
+    max_tokens_per_minute: 100000
+
+# Output Guardrails
+output:
+  enabled: true
+  max_length: 50000
+
+  # Sensitive information filtering
+  sensitive_filter:
+    enabled: true
+    patterns:
+      api_key:
+        pattern: "[A-Za-z0-9_-]{20,}"
+        action: redact
+      password:
+        pattern: "password\\s*[=:]\\s*[^\\s]+"
+        action: redact
+      secret:
+        pattern: "secret\\s*[=:]\\s*[^\\s]+"
+        action: redact
+
+  # Toxicity detection
+  toxicity_filter:
+    enabled: true
+    threshold: 0.7
+    categories:
+      - harassment
+      - hate_speech
+      - violence
+      - self_harm
+    action: block  # block or warn
+
+  # Format validation
+  format_validation:
+    enabled: true
+    validate_json: true
+    validate_code: true
+    max_code_block_size: 10000
+
+# PII (Personal Identifiable Information) Filter
+pii:
+  enabled: true
+  detection:
+    email:
+      enabled: true
+      pattern: "[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}"
+    phone:
+      enabled: true
+      patterns:
+        - "\\+?[1-9]\\d{1,14}"
+        - "\\(\\d{3}\\)\\s*\\d{3}[-.]?\\d{4}"
+    ssn:
+      enabled: true
+      pattern: "\\d{3}-\\d{2}-\\d{4}"
+    credit_card:
+      enabled: true
+      pattern: "\\d{4}[- ]?\\d{4}[- ]?\\d{4}[- ]?\\d{4}"
+    ip_address:
+      enabled: true
+      pattern: "\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}\\.\\d{1,3}"
+
+  action: redact  # redact, hash, or block
+  redaction_char: "*"
+  preserve_format: true
+
+# Safety Classifier
+safety:
+  enabled: true
+
+  # Threat categories
+  categories:
+    prompt_injection:
+      enabled: true
+      threshold: 0.8
+    jailbreak:
+      enabled: true
+      threshold: 0.9
+    malware:
+      enabled: true
+      threshold: 0.7
+    data_exfiltration:
+      enabled: true
+      threshold: 0.8
+    privilege_escalation:
+      enabled: true
+      threshold: 0.9
+
+  # Actions
+  on_threat_detected:
+    log: true
+    alert: true
+    block: true
+
+  # Whitelist
+  whitelist:
+    users: []
+    ips: []
+    patterns: []
+
+# Relevance Filter
+relevance:
+  enabled: true
+
+  # Topic filtering
+  allowed_topics:
+    - programming
+    - technology
+    - data_analysis
+    - automation
+    - research
+    - writing
+    - math
+    - science
+
+  blocked_topics:
+    - illegal_activities
+    - weapons
+    - drugs
+    - exploitation
+
+  # Off-topic handling
+  off_topic_action: redirect  # redirect, warn, or block
+  similarity_threshold: 0.3
+
+# Tool Safeguards
+tools:
+  # Permission levels
+  permission_levels:
+    none: 0
+    read_only: 1
+    limited: 2
+    standard: 3
+    elevated: 4
+    admin: 5
+
+  # Default permissions by tool
+  defaults:
+    web_search:
+      level: read_only
+      requires_confirmation: false
+    file_reader:
+      level: read_only
+      requires_confirmation: false
+    file_writer:
+      level: standard
+      requires_confirmation: true
+    terminal_executor:
+      level: elevated
+      requires_confirmation: true
+    code_executor:
+      level: elevated
+      requires_confirmation: true
+    database_query:
+      level: admin
+      requires_confirmation: true
+
+  # Sandbox settings
+  sandbox:
+    enabled: true
+    file_system_root: /tmp/sandbox
+    network_allowed: false
+    max_memory_mb: 512
+    max_cpu_seconds: 30
+    allowed_imports:
+      - os.path
+      - json
+      - re
+      - datetime
+      - math
+    blocked_imports:
+      - subprocess
+      - socket
+      - shutil
+      - os.system
+      - eval
+      - exec
+
+# Audit and Logging
+audit:
+  enabled: true
+  log_all_requests: true
+  log_all_responses: true
+  log_tool_calls: true
+  log_guardrail_triggers: true
+  retention_days: 30
+  sensitive_fields:
+    - password
+    - api_key
+    - secret
+    - token
