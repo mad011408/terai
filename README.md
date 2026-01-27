@@ -1,14 +1,41 @@
 # AI Terminal Agent
-## Update
-This is a test update to verify GitHub push.
-
+## 🚀 NEXUS AI - Ultra Performance Edition
 
 A powerful multi-agent AI system for terminal-based task automation. This project provides a flexible framework for orchestrating multiple specialized AI agents to accomplish complex tasks through natural language instructions.
+
+## ✨ New Features (v2.0)
+
+### 🔥 TurboEngine - Ultra High Performance
+- **Parallel Model Queries** - Query multiple models simultaneously for fastest response
+- **Smart Caching** - Context-aware response caching with LRU eviction
+- **Response Quality Enhancement** - AI-driven response optimization
+- **Adaptive Token Management** - Intelligent token allocation
+
+### ⚡ Performance Optimizations
+- **Max Tokens**: 120,000 tokens per request
+- **Timeout**: 1,600 seconds for complex tasks
+- **Context Window**: 200,000 tokens
+- **Streaming Optimization**: Real-time response streaming
+
+### 🎯 Quality Modes
+- **Ultra** - Maximum quality with all optimizations
+- **High** - High quality with fast response
+- **Balanced** - Balance between speed and quality
+- **Fast** - Fastest possible response
+
+### 🧠 Processing Modes
+- **Turbo** - Maximum speed
+- **Deep Think** - Deep reasoning and analysis
+- **Creative** - Creative content generation
+- **Code** - Code optimization and generation
+- **Analysis** - Data analysis and insights
 
 ## Features
 
 - **Multi-Agent Architecture**: Specialized agents for different tasks (code, terminal, research, file operations, debugging)
 - **Intelligent Task Routing**: Automatic routing of tasks to appropriate agents
+- **TurboEngine**: Ultra-fast response engine with parallel processing
+- **Smart Context Manager**: Intelligent memory with compression and optimization
 - **Multiple LLM Support**: Works with various AI models including:
   - Anthropic Claude (claude-sonnet-4, claude-opus-4.1, etc.)
   - OpenAI GPT models (gpt-5-codex, o3, o4, o5)

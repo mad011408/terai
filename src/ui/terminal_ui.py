@@ -472,6 +472,12 @@ class TerminalUI:
 │    /ml             - Multi-line input mode                                  │
 │    /exit           - Exit the application                                   │
 │                                                                             │
+│  [bold magenta]Turbo Mode (Ultra Performance)[/bold magenta]                                      │
+│    /turbo          - Toggle turbo mode ON/OFF                               │
+│    /quality <lvl>  - Set quality: ultra, high, balanced, fast               │
+│    /mode <type>    - Set mode: turbo, deep, creative, code, analysis        │
+│    /stats          - Show performance statistics                            │
+│                                                                             │
 │  [bold cyan]Prompt Shortcuts[/bold cyan]                                                       │
 │    coder, security, devops, researcher, creative                            │
 │                                                                             │

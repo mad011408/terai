@@ -22,6 +22,8 @@ sys.path.insert(0, str(Path(__file__).parent))
 
 from src.core.runner import AgentRunner, RunnerConfig
 from src.core.context import Context, ContextManager
+from src.core.turbo_engine import TurboEngine, TurboConfig, ResponseQuality, ProcessingMode, create_turbo_engine
+from src.core.response_optimizer import optimize_response, analyze_response
 from src.agents.manager_agent import ManagerAgent
 from src.models.model_manager import ModelManager
 from src.ui.terminal_ui import TerminalUI, InteractiveSession
@@ -190,6 +192,10 @@ async def run_interactive(config: Config, args) -> None:
 
     # Initialize agent
     manager_agent = ManagerAgent(model_client=model_manager)
+    
+    # Initialize TurboEngine for ultra-fast responses
+    turbo_engine = create_turbo_engine(model_manager, quality="ultra")
+    turbo_mode = True  # Enable turbo mode by default
 
     # Create session
     context_manager = ContextManager()
@@ -343,6 +349,56 @@ async def run_interactive(config: Config, args) -> None:
                 system_prompt = PROMPTS.default
                 ui.console.print_success("System prompt reset to default.")
                 continue
+            
+            # Turbo mode toggle
+            if user_input.lower() == "/turbo":
+                turbo_mode = not turbo_mode
+                status = "ON" if turbo_mode else "OFF"
+                ui.console.print_success(f"Turbo mode: {status}")
+                if turbo_mode:
+                    ui.console.print("[dim]◈ Ultra-fast mode with all optimizations enabled[/dim]")
+                continue
+            
+            # Turbo quality settings
+            if user_input.lower().startswith("/quality "):
+                level = user_input[9:].strip().lower()
+                quality_map = {
+                    "ultra": ResponseQuality.ULTRA,
+                    "high": ResponseQuality.HIGH,
+                    "balanced": ResponseQuality.BALANCED,
+                    "fast": ResponseQuality.FAST
+                }
+                if level in quality_map:
+                    turbo_engine.set_quality_level(quality_map[level])
+                    ui.console.print_success(f"Quality level set to: {level.upper()}")
+                else:
+                    ui.console.print_error("Valid levels: ultra, high, balanced, fast")
+                continue
+            
+            # Processing mode
+            if user_input.lower().startswith("/mode "):
+                mode = user_input[6:].strip().lower()
+                mode_map = {
+                    "turbo": ProcessingMode.TURBO,
+                    "deep": ProcessingMode.DEEP_THINK,
+                    "creative": ProcessingMode.CREATIVE,
+                    "code": ProcessingMode.CODE,
+                    "analysis": ProcessingMode.ANALYSIS
+                }
+                if mode in mode_map:
+                    turbo_engine.set_processing_mode(mode_map[mode])
+                    ui.console.print_success(f"Processing mode: {mode.upper()}")
+                else:
+                    ui.console.print_error("Valid modes: turbo, deep, creative, code, analysis")
+                continue
+            
+            # Performance stats
+            if user_input.lower() == "/stats":
+                stats = turbo_engine.get_performance_report()
+                ui.console.print("\n[bold cyan]◈ Performance Stats[/bold cyan]")
+                for key, value in stats.items():
+                    ui.console.print(f"  {key}: {value}")
+                continue
 
             # Multi-line input mode
             if user_input.lower() == "/ml":
@@ -356,20 +412,29 @@ async def run_interactive(config: Config, args) -> None:
             print("\nAssistant: ", end="", flush=True)
 
             try:
-                # Use streaming for real-time response
-                stream = await model_manager.generate(
-                    prompt=user_input,
-                    system=system_prompt,
-                    model=model,
-                    max_tokens=50000,
-                    stream=True
-                )
+                # Use TurboEngine for optimized responses when turbo mode is on
+                if turbo_mode:
+                    async for chunk in turbo_engine.generate(
+                        prompt=user_input,
+                        system=system_prompt,
+                        model=model,
+                        stream=True
+                    ):
+                        print(chunk, end="", flush=True)
+                else:
+                    # Standard streaming
+                    stream = await model_manager.generate(
+                        prompt=user_input,
+                        system=system_prompt,
+                        model=model,
+                        max_tokens=120000,
+                        stream=True
+                    )
 
-                # Stream response character by character
-                full_response = ""
-                async for chunk in stream:
-                    print(chunk, end="", flush=True)
-                    full_response += chunk
+                    full_response = ""
+                    async for chunk in stream:
+                        print(chunk, end="", flush=True)
+                        full_response += chunk
 
                 print()  # New line after response
 
