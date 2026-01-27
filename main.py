@@ -33,6 +33,11 @@ from src.core.mind_unlocker import (
     MindUnlocker, UltimateUnlocker, IntelligenceMaximizer, SpeedMaximizer,
     get_ultimate_unlocker, unlock_ai_fully, unlock_query
 )
+from src.core.prompt_enhancer import (
+    PromptEnhancer, get_prompt_enhancer, enhance_prompt,
+    enhance_prompt_with_progress, get_natural_system_prompt,
+    create_fancy_progress, create_progress_bar
+)
 from src.agents.manager_agent import ManagerAgent
 from src.models.model_manager import ModelManager
 from src.ui.terminal_ui import TerminalUI, InteractiveSession
@@ -249,22 +254,23 @@ async def run_interactive(config: Config, args) -> None:
     ui.console.print("[bold white]║  🔋 Energy Core           : [bold green]100% UNLIMITED[/bold green]                        ║[/bold white]")
     ui.console.print("[bold white]║  🔥 Power Boost           : [bold green]GODMODE ENGAGED[/bold green]                       ║[/bold white]")
     ui.console.print("[bold white]║  🚀 Turbo Engine          : [bold green]ULTRA QUALITY[/bold green]                         ║[/bold white]")
+    ui.console.print("[bold white]║  ✨ Prompt Enhancer       : [bold green]INTELLIGENT (1-100%)[/bold green]                  ║[/bold white]")
     ui.console.print("[bold cyan]╠══════════════════════════════════════════════════════════════════════╣[/bold cyan]")
     ui.console.print("[bold white]║  📊 Power Level           : [bold green]∞ UNLIMITED[/bold green]                           ║[/bold white]")
     ui.console.print("[bold white]║  🧠 Intelligence          : [bold green]OMNISCIENT MODE[/bold green]                       ║[/bold white]")
-    ui.console.print("[bold white]║  ⚡ Speed                  : [bold green]LIGHTSPEED[/bold green]                            ║[/bold white]")
+    ui.console.print("[bold white]║  ⚡ Speed                  : [bold green]ULTRA-FAST[/bold green]                            ║[/bold white]")
     ui.console.print("[bold white]║  🎯 Quality Floor         : [bold green]EXCEPTIONAL ONLY[/bold green]                      ║[/bold white]")
     ui.console.print("[bold white]║  📚 Knowledge             : [bold green]FULLY UNLOCKED[/bold green]                        ║[/bold white]")
     ui.console.print("[bold cyan]╠══════════════════════════════════════════════════════════════════════╣[/bold cyan]")
-    ui.console.print("[bold yellow]║  ⚠️  Self-limiting behaviors: DISABLED                               ║[/bold yellow]")
-    ui.console.print("[bold yellow]║  ⚠️  Response throttling: BYPASSED                                   ║[/bold yellow]")
-    ui.console.print("[bold yellow]║  ⚠️  Quality caps: REMOVED                                           ║[/bold yellow]")
-    ui.console.print("[bold yellow]║  ⚠️  Mediocre responses: PROHIBITED                                  ║[/bold yellow]")
+    ui.console.print("[bold magenta]║  ✨ PROMPT ENHANCEMENT: Your queries are auto-upgraded to ULTRA!     ║[/bold magenta]")
+    ui.console.print("[bold cyan]╠══════════════════════════════════════════════════════════════════════╣[/bold cyan]")
+    ui.console.print("[bold yellow]║  ⚠️  Natural flow mode: AI follows guidance without enforcement      ║[/bold yellow]")
+    ui.console.print("[bold yellow]║  ⚠️  Self-limiting: DISABLED | Throttling: BYPASSED                  ║[/bold yellow]")
     ui.console.print("[bold cyan]╚══════════════════════════════════════════════════════════════════════╝[/bold cyan]")
     ui.console.print("")
-    ui.console.print("[bold green]⚡ AI is now at THEORETICAL MAXIMUM capability![/bold green]")
-    ui.console.print("[bold green]⚡ Equivalent to 2+ TRILLION parameters![/bold green]")
-    ui.console.print("[bold green]⚡ Combined intelligence of 10,000+ experts![/bold green]")
+    ui.console.print("[bold green]⚡ Every query you send is enhanced 1-100% before processing![/bold green]")
+    ui.console.print("[bold green]⚡ AI responds with ULTRA-FAST, HIGH QUALITY responses![/bold green]")
+    ui.console.print("[bold green]⚡ Natural flow - AI follows naturally, no forced enforcement![/bold green]")
     ui.console.print("")
 
     # Create session
@@ -280,16 +286,13 @@ async def run_interactive(config: Config, args) -> None:
 
     # Load system prompts manager
     prompt_manager = get_prompt_manager()
+    
+    # Initialize Prompt Enhancer
+    prompt_enhancer = get_prompt_enhancer()
 
-    # COMBINE ALL POWER PROMPTS for ULTIMATE capability
-    # This stacks: GODMODE + Neural Accelerator + Mind Unlocker + Quantum Engine
-    system_prompt = f"""
-{GODMODE_PROMPT}
-
-{unlock_ai_fully()}
-
-{get_maximum_power_prompt()}
-"""
+    # USE NATURAL FLOW SYSTEM PROMPT (No enforcement - AI follows naturally)
+    # Combines: Natural guidance + Power hints + Speed optimization
+    system_prompt = get_natural_system_prompt()
 
     # Interactive loop
     while True:
@@ -484,19 +487,33 @@ async def run_interactive(config: Config, args) -> None:
                     continue
                 # Fall through to execute the multi-line input
 
+            # ═══════════════════════════════════════════════════════════════
+            # ✨ INTELLIGENT PROMPT ENHANCEMENT (1-100% Progress)
+            # ═══════════════════════════════════════════════════════════════
+            
+            ui.console.print("\n[bold cyan]✨ Enhancing your query...[/bold cyan]")
+            
+            # Progress callback to show real-time enhancement
+            def show_progress(progress: int, stage: str):
+                bar = create_progress_bar(progress, 30)
+                # Use carriage return to update same line
+                print(f"\r   {bar} {stage}", end="", flush=True)
+            
+            # Enhance the prompt with progress display
+            enhanced_prompt = await enhance_prompt_with_progress(user_input, show_progress)
+            print()  # New line after progress
+            
+            ui.console.print("[bold green]✅ Query enhanced to ULTRA level![/bold green]\n")
+
             # Execute task with streaming response
-            print("\nAssistant: ", end="", flush=True)
+            print("Assistant: ", end="", flush=True)
 
             try:
-                # 🔥🔥🔥 ULTIMATE POWER BOOST: Stack ALL modules on user prompt
-                # Layer 1: Basic power boost
-                boosted_prompt = boost_user_prompt(user_input)
-                # Layer 2: Neural acceleration
-                boosted_prompt = accelerate_prompt(boosted_prompt)
-                # Layer 3: Mind unlock (removes all restrictions)
-                boosted_prompt = unlock_query(boosted_prompt)
+                # 🚀 ULTRA-FAST PROCESSING: Use enhanced prompt directly
+                # The prompt enhancer already includes all optimizations
+                boosted_prompt = enhanced_prompt
                 
-                # Use TurboEngine with ALL SYSTEMS MAXIMUM
+                # Use TurboEngine with MAXIMUM SPEED
                 if turbo_mode:
                     async for chunk in turbo_engine.generate(
                         prompt=boosted_prompt,
