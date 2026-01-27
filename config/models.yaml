@@ -36,6 +36,30 @@ models:
     cost_per_1k_input: 0.015
     cost_per_1k_output: 0.075
 
+  claude-opus-4-1-20250805:
+    provider: anthropic
+    display_name: Claude Opus 4.1 (2025-08-05)
+    description: Claude Opus 4.1 snapshot from August 2025
+    max_tokens: 16384
+    context_window: 200000
+    supports_streaming: true
+    supports_functions: true
+    supports_vision: true
+    cost_per_1k_input: 0.015
+    cost_per_1k_output: 0.075
+
+  anthropic.claude-opus-4-1-20250805-v1:0:
+    provider: anthropic
+    display_name: Claude Opus 4.1 Bedrock (v1.0)
+    description: Claude Opus 4.1 for AWS Bedrock
+    max_tokens: 16384
+    context_window: 200000
+    supports_streaming: true
+    supports_functions: true
+    supports_vision: true
+    cost_per_1k_input: 0.015
+    cost_per_1k_output: 0.075
+
   anthropic/claude-sonnet-4.5:
     provider: anthropic
     display_name: Claude Sonnet 4.5
