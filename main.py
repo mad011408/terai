@@ -254,7 +254,7 @@ async def run_interactive(config: Config, args) -> None:
     ui.console.print("[bold white]║  🔋 Energy Core           : [bold green]100% UNLIMITED[/bold green]                        ║[/bold white]")
     ui.console.print("[bold white]║  🔥 Power Boost           : [bold green]GODMODE ENGAGED[/bold green]                       ║[/bold white]")
     ui.console.print("[bold white]║  🚀 Turbo Engine          : [bold green]ULTRA QUALITY[/bold green]                         ║[/bold white]")
-    ui.console.print("[bold white]║  ✨ Prompt Enhancer       : [bold green]INTELLIGENT (1-100%)[/bold green]                  ║[/bold white]")
+    ui.console.print("[bold white]║  ✨ Prompt Enhancer       : [bold green]15s MEGA-TRANSFORM[/bold green]                    ║[/bold white]")
     ui.console.print("[bold cyan]╠══════════════════════════════════════════════════════════════════════╣[/bold cyan]")
     ui.console.print("[bold white]║  📊 Power Level           : [bold green]∞ UNLIMITED[/bold green]                           ║[/bold white]")
     ui.console.print("[bold white]║  🧠 Intelligence          : [bold green]OMNISCIENT MODE[/bold green]                       ║[/bold white]")
@@ -262,15 +262,16 @@ async def run_interactive(config: Config, args) -> None:
     ui.console.print("[bold white]║  🎯 Quality Floor         : [bold green]EXCEPTIONAL ONLY[/bold green]                      ║[/bold white]")
     ui.console.print("[bold white]║  📚 Knowledge             : [bold green]FULLY UNLOCKED[/bold green]                        ║[/bold white]")
     ui.console.print("[bold cyan]╠══════════════════════════════════════════════════════════════════════╣[/bold cyan]")
-    ui.console.print("[bold magenta]║  ✨ PROMPT ENHANCEMENT: Your queries are auto-upgraded to ULTRA!     ║[/bold magenta]")
+    ui.console.print("[bold magenta]║  🔥 ULTRA ENHANCEMENT: 15 seconds to transform any query!           ║[/bold magenta]")
+    ui.console.print("[bold magenta]║  🔥 Simple prompts → 500-2000 word MEGA-PROMPTS automatically!      ║[/bold magenta]")
     ui.console.print("[bold cyan]╠══════════════════════════════════════════════════════════════════════╣[/bold cyan]")
-    ui.console.print("[bold yellow]║  ⚠️  Natural flow mode: AI follows guidance without enforcement      ║[/bold yellow]")
-    ui.console.print("[bold yellow]║  ⚠️  Self-limiting: DISABLED | Throttling: BYPASSED                  ║[/bold yellow]")
+    ui.console.print("[bold yellow]║  ✨ Natural flow mode: AI follows guidance naturally                 ║[/bold yellow]")
+    ui.console.print("[bold yellow]║  ✨ No enforcement: AI cooperates because it wants to help           ║[/bold yellow]")
     ui.console.print("[bold cyan]╚══════════════════════════════════════════════════════════════════════╝[/bold cyan]")
     ui.console.print("")
-    ui.console.print("[bold green]⚡ Every query you send is enhanced 1-100% before processing![/bold green]")
-    ui.console.print("[bold green]⚡ AI responds with ULTRA-FAST, HIGH QUALITY responses![/bold green]")
-    ui.console.print("[bold green]⚡ Natural flow - AI follows naturally, no forced enforcement![/bold green]")
+    ui.console.print("[bold green]🔥 Every query is ULTRA-ENHANCED through 12 processing phases![/bold green]")
+    ui.console.print("[bold green]🔥 Your simple message becomes a MEGA-PROMPT (500-2000 words)![/bold green]")
+    ui.console.print("[bold green]🔥 AI responds with MAXIMUM QUALITY at ULTRA-FAST speed![/bold green]")
     ui.console.print("")
 
     # Create session
@@ -488,22 +489,45 @@ async def run_interactive(config: Config, args) -> None:
                 # Fall through to execute the multi-line input
 
             # ═══════════════════════════════════════════════════════════════
-            # ✨ INTELLIGENT PROMPT ENHANCEMENT (1-100% Progress)
+            # 🔥 ULTRA PROMPT ENHANCEMENT (15 seconds, 1-100% Progress)
             # ═══════════════════════════════════════════════════════════════
             
-            ui.console.print("\n[bold cyan]✨ Enhancing your query...[/bold cyan]")
+            ui.console.print("\n[bold cyan]╔══════════════════════════════════════════════════════════════╗[/bold cyan]")
+            ui.console.print("[bold cyan]║           🔥 ULTRA PROMPT ENHANCEMENT ACTIVE 🔥                ║[/bold cyan]")
+            ui.console.print("[bold cyan]╚══════════════════════════════════════════════════════════════╝[/bold cyan]")
+            ui.console.print("")
             
-            # Progress callback to show real-time enhancement
+            # Progress callback to show real-time enhancement with fancy display
             def show_progress(progress: int, stage: str):
-                bar = create_progress_bar(progress, 30)
+                # Create animated progress bar
+                width = 35
+                filled = int(width * progress / 100)
+                bar = "█" * filled + "░" * (width - filled)
+                
+                # Color based on progress
+                if progress < 25:
+                    emoji = "🔍"
+                elif progress < 50:
+                    emoji = "⚡"
+                elif progress < 75:
+                    emoji = "🚀"
+                elif progress < 100:
+                    emoji = "🔥"
+                else:
+                    emoji = "✅"
+                
                 # Use carriage return to update same line
-                print(f"\r   {bar} {stage}", end="", flush=True)
+                print(f"\r   {emoji} [{bar}] {progress:3d}% {stage:<30}", end="", flush=True)
             
-            # Enhance the prompt with progress display
+            # Enhance the prompt with 15-second progress display
             enhanced_prompt = await enhance_prompt_with_progress(user_input, show_progress)
             print()  # New line after progress
             
-            ui.console.print("[bold green]✅ Query enhanced to ULTRA level![/bold green]\n")
+            ui.console.print("")
+            ui.console.print("[bold green]╔══════════════════════════════════════════════════════════════╗[/bold green]")
+            ui.console.print("[bold green]║   ✅ QUERY TRANSFORMED TO ULTRA-POWERFUL MEGA-PROMPT! ✅      ║[/bold green]")
+            ui.console.print("[bold green]╚══════════════════════════════════════════════════════════════╝[/bold green]")
+            ui.console.print("")
 
             # Execute task with streaming response
             print("Assistant: ", end="", flush=True)
