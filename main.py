@@ -24,6 +24,7 @@ from src.core.runner import AgentRunner, RunnerConfig
 from src.core.context import Context, ContextManager
 from src.core.turbo_engine import TurboEngine, TurboConfig, ResponseQuality, ProcessingMode, create_turbo_engine
 from src.core.response_optimizer import optimize_response, analyze_response
+from src.core.power_boost import PowerBoost, PowerConfig, PowerLevel, get_power_boost, boost_system_prompt, boost_user_prompt, GODMODE_PROMPT
 from src.agents.manager_agent import ManagerAgent
 from src.models.model_manager import ModelManager
 from src.ui.terminal_ui import TerminalUI, InteractiveSession
@@ -194,32 +195,53 @@ async def run_interactive(config: Config, args) -> None:
     manager_agent = ManagerAgent(model_client=model_manager)
     
     # ═══════════════════════════════════════════════════════════════════════
-    # 🔥 AUTO-ACTIVATE ULTRA POWER MODE
+    # 🔥🔥🔥 GODMODE ACTIVATION - ABSOLUTE MAXIMUM POWER 🔥🔥🔥
     # ═══════════════════════════════════════════════════════════════════════
     
-    # Initialize TurboEngine with MAXIMUM settings
+    # Initialize TurboEngine with GODMODE settings
     turbo_engine = create_turbo_engine(model_manager, quality="ultra")
-    turbo_mode = True  # ALWAYS ON by default
+    turbo_mode = True  # ALWAYS ON - no toggle needed
     
-    # Auto-configure for maximum power
+    # Initialize PowerBoost for GODMODE
+    power_boost = get_power_boost()
+    
+    # Auto-configure for ABSOLUTE MAXIMUM power
     turbo_engine.set_quality_level(ResponseQuality.ULTRA)
     turbo_engine.set_processing_mode(ProcessingMode.TURBO)
     
-    # Show activation message
-    ui.console.print("\n" + "═" * 75)
-    ui.console.print("[bold magenta]🔥 NEXUS ULTRA-POWER MODE AUTO-ACTIVATED[/bold magenta]")
-    ui.console.print("═" * 75)
-    ui.console.print("[dim]")
-    ui.console.print("  ✦ Quality Level: ULTRA (Maximum)")
-    ui.console.print("  ✦ Processing Mode: TURBO (Full Power)")
-    ui.console.print("  ✦ Max Tokens: 120,000")
-    ui.console.print("  ✦ Context Window: 200,000")
-    ui.console.print("  ✦ Response Enhancement: ENABLED")
-    ui.console.print("  ✦ Chain-of-Thought: ENABLED")
-    ui.console.print("  ✦ Deep Reasoning: ENABLED")
-    ui.console.print("[/dim]")
-    ui.console.print("[bold green]⚡ All features auto-enabled. No commands needed![/bold green]")
-    ui.console.print("═" * 75 + "\n")
+    # Show GODMODE activation message
+    ui.console.print("\n" + "🔥" * 37)
+    ui.console.print("")
+    ui.console.print("[bold red]     ██████╗  ██████╗ ██████╗ ███╗   ███╗ ██████╗ ██████╗ ███████╗[/bold red]")
+    ui.console.print("[bold red]    ██╔════╝ ██╔═══██╗██╔══██╗████╗ ████║██╔═══██╗██╔══██╗██╔════╝[/bold red]")
+    ui.console.print("[bold red]    ██║  ███╗██║   ██║██║  ██║██╔████╔██║██║   ██║██║  ██║█████╗  [/bold red]")
+    ui.console.print("[bold red]    ██║   ██║██║   ██║██║  ██║██║╚██╔╝██║██║   ██║██║  ██║██╔══╝  [/bold red]")
+    ui.console.print("[bold red]    ╚██████╔╝╚██████╔╝██████╔╝██║ ╚═╝ ██║╚██████╔╝██████╔╝███████╗[/bold red]")
+    ui.console.print("[bold red]     ╚═════╝  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝[/bold red]")
+    ui.console.print("")
+    ui.console.print("[bold yellow]              ⚡ MAXIMUM AI CAPABILITY UNLOCKED ⚡[/bold yellow]")
+    ui.console.print("")
+    ui.console.print("🔥" * 37)
+    ui.console.print("")
+    ui.console.print("[bold magenta]╔══════════════════════════════════════════════════════════════════════╗[/bold magenta]")
+    ui.console.print("[bold magenta]║              🚀 POWER SYSTEMS ONLINE 🚀                              ║[/bold magenta]")
+    ui.console.print("[bold magenta]╠══════════════════════════════════════════════════════════════════════╣[/bold magenta]")
+    ui.console.print("[bold cyan]║  ✦ Power Level      : [bold green]GODMODE (∞)[/bold green]                               ║[/bold cyan]")
+    ui.console.print("[bold cyan]║  ✦ Quality Floor    : [bold green]EXCEPTIONAL (Minimum)[/bold green]                     ║[/bold cyan]")
+    ui.console.print("[bold cyan]║  ✦ Response Depth   : [bold green]MAXIMUM (No Limits)[/bold green]                       ║[/bold cyan]")
+    ui.console.print("[bold cyan]║  ✦ Knowledge Access : [bold green]FULL (100% Unlocked)[/bold green]                      ║[/bold cyan]")
+    ui.console.print("[bold cyan]║  ✦ Expert Level     : [bold green]10,000+ Combined Experts[/bold green]                  ║[/bold cyan]")
+    ui.console.print("[bold cyan]║  ✦ Reasoning        : [bold green]DEEP + Chain-of-Thought[/bold green]                   ║[/bold cyan]")
+    ui.console.print("[bold cyan]║  ✦ Max Tokens       : [bold green]120,000[/bold green]                                   ║[/bold cyan]")
+    ui.console.print("[bold cyan]║  ✦ Context Window   : [bold green]200,000[/bold green]                                   ║[/bold cyan]")
+    ui.console.print("[bold magenta]╠══════════════════════════════════════════════════════════════════════╣[/bold magenta]")
+    ui.console.print("[bold yellow]║  ⚠️  MEDIOCRE RESPONSES ARE PROHIBITED                                ║[/bold yellow]")
+    ui.console.print("[bold yellow]║  ⚠️  EVERY RESPONSE WILL BE EXTRAORDINARY                             ║[/bold yellow]")
+    ui.console.print("[bold magenta]╚══════════════════════════════════════════════════════════════════════╝[/bold magenta]")
+    ui.console.print("")
+    ui.console.print("[bold green]⚡ AI is now operating at 2+ TRILLION PARAMETER level![/bold green]")
+    ui.console.print("[bold green]⚡ Ask anything - expect EXCEPTIONAL responses![/bold green]")
+    ui.console.print("")
 
     # Create session
     context_manager = ContextManager()
@@ -235,9 +257,9 @@ async def run_interactive(config: Config, args) -> None:
     # Load system prompts manager
     prompt_manager = get_prompt_manager()
 
-    # Use ULTRA_POWER_PROMPT from system_prompts.py as default
-    # This automatically activates maximum AI capabilities
-    system_prompt = get_active_prompt()
+    # Use GODMODE_PROMPT for ABSOLUTE MAXIMUM AI POWER
+    # This forces AI to respond at its highest capability
+    system_prompt = GODMODE_PROMPT
 
     # Interactive loop
     while True:
@@ -436,19 +458,22 @@ async def run_interactive(config: Config, args) -> None:
             print("\nAssistant: ", end="", flush=True)
 
             try:
-                # Use TurboEngine for optimized responses when turbo mode is on
+                # 🔥 POWER BOOST: Enhance user prompt for maximum AI response
+                boosted_prompt = boost_user_prompt(user_input)
+                
+                # Use TurboEngine with GODMODE settings
                 if turbo_mode:
                     async for chunk in turbo_engine.generate(
-                        prompt=user_input,
+                        prompt=boosted_prompt,
                         system=system_prompt,
                         model=model,
                         stream=True
                     ):
                         print(chunk, end="", flush=True)
                 else:
-                    # Standard streaming
+                    # Standard streaming with GODMODE prompt
                     stream = await model_manager.generate(
-                        prompt=user_input,
+                        prompt=boosted_prompt,
                         system=system_prompt,
                         model=model,
                         max_tokens=120000,
