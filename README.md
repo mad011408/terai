@@ -1,4 +1,7 @@
 # AI Terminal Agent
+## Update
+This is a test update to verify GitHub push.
+
 
 A powerful multi-agent AI system for terminal-based task automation. This project provides a flexible framework for orchestrating multiple specialized AI agents to accomplish complex tasks through natural language instructions.
 
