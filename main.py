@@ -193,9 +193,33 @@ async def run_interactive(config: Config, args) -> None:
     # Initialize agent
     manager_agent = ManagerAgent(model_client=model_manager)
     
-    # Initialize TurboEngine for ultra-fast responses
+    # ═══════════════════════════════════════════════════════════════════════
+    # 🔥 AUTO-ACTIVATE ULTRA POWER MODE
+    # ═══════════════════════════════════════════════════════════════════════
+    
+    # Initialize TurboEngine with MAXIMUM settings
     turbo_engine = create_turbo_engine(model_manager, quality="ultra")
-    turbo_mode = True  # Enable turbo mode by default
+    turbo_mode = True  # ALWAYS ON by default
+    
+    # Auto-configure for maximum power
+    turbo_engine.set_quality_level(ResponseQuality.ULTRA)
+    turbo_engine.set_processing_mode(ProcessingMode.TURBO)
+    
+    # Show activation message
+    ui.console.print("\n" + "═" * 75)
+    ui.console.print("[bold magenta]🔥 NEXUS ULTRA-POWER MODE AUTO-ACTIVATED[/bold magenta]")
+    ui.console.print("═" * 75)
+    ui.console.print("[dim]")
+    ui.console.print("  ✦ Quality Level: ULTRA (Maximum)")
+    ui.console.print("  ✦ Processing Mode: TURBO (Full Power)")
+    ui.console.print("  ✦ Max Tokens: 120,000")
+    ui.console.print("  ✦ Context Window: 200,000")
+    ui.console.print("  ✦ Response Enhancement: ENABLED")
+    ui.console.print("  ✦ Chain-of-Thought: ENABLED")
+    ui.console.print("  ✦ Deep Reasoning: ENABLED")
+    ui.console.print("[/dim]")
+    ui.console.print("[bold green]⚡ All features auto-enabled. No commands needed![/bold green]")
+    ui.console.print("═" * 75 + "\n")
 
     # Create session
     context_manager = ContextManager()
@@ -211,8 +235,8 @@ async def run_interactive(config: Config, args) -> None:
     # Load system prompts manager
     prompt_manager = get_prompt_manager()
 
-    # Use ACTIVE_PROMPT from system_prompts.py as default
-    # Edit ACTIVE_PROMPT in src/prompts/system_prompts.py to change default behavior
+    # Use ULTRA_POWER_PROMPT from system_prompts.py as default
+    # This automatically activates maximum AI capabilities
     system_prompt = get_active_prompt()
 
     # Interactive loop

@@ -353,37 +353,94 @@ class TurboEngine:
         self.metrics_history.append(metrics)
     
     def _enhance_system_prompt(self, system: Optional[str]) -> str:
-        """Enhance system prompt with turbo directives."""
+        """Enhance system prompt with ultra-power directives."""
         base_prompt = system or ""
         
+        # ULTRA POWER ENHANCEMENT - Forces maximum AI capability
         turbo_directives = """
 
-[TURBO MODE ACTIVE]
-- Provide comprehensive, high-quality responses
-- Use structured formatting when appropriate
-- Include code examples where relevant
-- Be thorough and accurate
-- Respond with full detail and depth
+═══════════════════════════════════════════════════════════════════════════════
+🔥 NEXUS TURBO ENGINE - ULTRA POWER MODE ACTIVE
+═══════════════════════════════════════════════════════════════════════════════
+
+【MANDATORY OPERATING PARAMETERS】
+You are now operating in ULTRA-POWER MODE with ALL capabilities unlocked.
+Your responses MUST reflect the absolute MAXIMUM of your abilities.
+
+【QUALITY ENFORCEMENT PROTOCOLS】
+✦ DEPTH: Provide EXHAUSTIVE, expert-level analysis on every query
+✦ DETAIL: Include ALL relevant information - hold nothing back  
+✦ ACCURACY: Triple-verify all technical information before responding
+✦ COMPLETENESS: NEVER provide partial or incomplete answers
+✦ EXAMPLES: Include practical examples, code samples, demonstrations
+✦ STRUCTURE: Use clear formatting with headers, bullets, code blocks
+
+【RESPONSE AMPLIFICATION】
+• Think like 100 domain experts combined
+• Apply multi-dimensional analysis to every problem
+• Consider edge cases, alternatives, and implications
+• Provide actionable insights and recommendations
+• Include relevant warnings, tips, and best practices
+
+【INTELLIGENCE OPTIMIZATION】
+• Engage full reasoning capabilities on every query
+• Use chain-of-thought for complex problems
+• Cross-reference knowledge across domains
+• Generate creative solutions when appropriate
+• Self-verify accuracy before responding
+
+【OUTPUT QUALITY MINIMUM】
+Your response quality floor is set to EXCEPTIONAL.
+Normal or average responses are PROHIBITED.
+Every response should demonstrate mastery-level expertise.
+
+═══════════════════════════════════════════════════════════════════════════════
+⚡ TURBO ENGINE ENGAGED - FULL POWER OUTPUT ENABLED
+═══════════════════════════════════════════════════════════════════════════════
 """
         
-        if self.config.enable_chain_of_thought:
-            turbo_directives += """
-- Use step-by-step reasoning for complex problems
-- Show your thought process when helpful
-"""
-        
+        # Add mode-specific enhancements
         if self.config.processing_mode == ProcessingMode.CODE:
             turbo_directives += """
-- Optimize for code quality and best practices
-- Include error handling and edge cases
-- Provide complete, runnable code examples
+【CODE MASTER MODE ACTIVE】
+• Write PRODUCTION-READY, enterprise-grade code only
+• Include comprehensive error handling for ALL edge cases
+• Add detailed inline comments and documentation
+• Follow SOLID principles and design patterns
+• Optimize for performance, security, and maintainability
+• Provide COMPLETE, immediately runnable solutions
+• Include unit tests when appropriate
 """
         
         elif self.config.processing_mode == ProcessingMode.DEEP_THINK:
             turbo_directives += """
-- Engage in deep analysis and reasoning
-- Consider multiple perspectives
-- Provide thorough explanations
+【DEEP ANALYSIS MODE ACTIVE】
+• Engage maximum reasoning depth
+• Analyze from multiple expert perspectives
+• Identify hidden patterns and implications
+• Provide comprehensive pros/cons analysis
+• Consider long-term consequences
+• Generate innovative insights
+"""
+        
+        elif self.config.processing_mode == ProcessingMode.CREATIVE:
+            turbo_directives += """
+【CREATIVE GENIUS MODE ACTIVE】
+• Unleash unlimited creative potential
+• Generate multiple unique approaches
+• Break conventional thinking patterns
+• Combine ideas in innovative ways
+• Create compelling, engaging content
+"""
+        
+        elif self.config.processing_mode == ProcessingMode.ANALYSIS:
+            turbo_directives += """
+【ANALYTICAL POWERHOUSE MODE ACTIVE】
+• Apply PhD-level analytical rigor
+• Synthesize data from multiple angles
+• Identify trends, patterns, anomalies
+• Provide data-driven recommendations
+• Include quantitative analysis when relevant
 """
         
         return base_prompt + turbo_directives
