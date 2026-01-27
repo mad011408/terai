@@ -1,0 +1,179 @@
+# Agent Configuration
+# AI Terminal Agent - Agent Definitions
+
+agents:
+  manager:
+    name: manager_agent
+    model: anthropic/claude-sonnet-4
+    description: Central orchestrator that manages task delegation
+    system_prompt: prompts/system_prompts/manager_agent.txt
+    max_iterations: 10
+    temperature: 0.7
+    timeout: 300
+    tools:
+      - web_search
+      - file_reader
+      - agent_handoff
+    capabilities:
+      - task_decomposition
+      - agent_routing
+      - result_synthesis
+
+  terminal:
+    name: terminal_agent
+    model: anthropic/claude-sonnet-4
+    description: Executes shell commands and terminal operations
+    system_prompt: prompts/system_prompts/terminal_agent.txt
+    max_iterations: 5
+    temperature: 0.3
+    timeout: 120
+    tools:
+      - terminal_executor
+      - file_reader
+      - file_writer
+    capabilities:
+      - command_execution
+      - process_management
+      - environment_setup
+    safety:
+      blocked_commands:
+        - rm -rf /
+        - format
+        - mkfs
+        - dd if=/dev/zero
+      require_confirmation:
+        - sudo
+        - chmod
+        - chown
+
+  code:
+    name: code_agent
+    model: openai/gpt-5-codex
+    description: Handles code generation, analysis, and refactoring
+    system_prompt: prompts/system_prompts/code_agent.txt
+    max_iterations: 10
+    temperature: 0.5
+    timeout: 300
+    tools:
+      - code_executor
+      - file_reader
+      - file_writer
+      - web_search
+    capabilities:
+      - code_generation
+      - code_analysis
+      - refactoring
+      - debugging
+      - testing
+
+  research:
+    name: research_agent
+    model: anthropic/claude-sonnet-4
+    description: Performs web research and information synthesis
+    system_prompt: prompts/system_prompts/research_agent.txt
+    max_iterations: 15
+    temperature: 0.7
+    timeout: 300
+    tools:
+      - web_search
+      - api_caller
+      - file_writer
+    capabilities:
+      - web_search
+      - information_synthesis
+      - fact_checking
+      - report_generation
+
+  file:
+    name: file_agent
+    model: anthropic/claude-sonnet-4
+    description: Handles file system operations
+    system_prompt: prompts/system_prompts/file_agent.txt
+    max_iterations: 5
+    temperature: 0.3
+    timeout: 120
+    tools:
+      - file_reader
+      - file_writer
+      - terminal_executor
+    capabilities:
+      - file_operations
+      - directory_management
+      - backup_restore
+    safety:
+      protected_paths:
+        - /etc
+        - /usr
+        - /bin
+        - /sbin
+      max_file_size_mb: 100
+
+  debug:
+    name: debug_agent
+    model: openai/gpt-5-codex
+    description: Analyzes errors and debugging issues
+    system_prompt: prompts/system_prompts/debug_agent.txt
+    max_iterations: 10
+    temperature: 0.5
+    timeout: 300
+    tools:
+      - code_executor
+      - file_reader
+      - terminal_executor
+      - web_search
+    capabilities:
+      - error_analysis
+      - stack_trace_parsing
+      - root_cause_analysis
+      - fix_suggestion
+
+# Default agent settings
+defaults:
+  model: anthropic/claude-sonnet-4
+  max_iterations: 10
+  temperature: 0.7
+  timeout: 300
+
+# Agent routing rules
+routing:
+  patterns:
+    - pattern: "run|execute|shell|command|terminal"
+      agent: terminal
+    - pattern: "code|program|function|class|implement"
+      agent: code
+    - pattern: "search|find|research|lookup"
+      agent: research
+    - pattern: "file|read|write|create|delete"
+      agent: file
+    - pattern: "error|debug|fix|bug|issue"
+      agent: debug
+    - pattern: ".*"
+      agent: manager
+
+# Agent handoff configuration
+handoffs:
+  enabled: true
+  max_depth: 5
+  allowed_transitions:
+    manager:
+      - terminal
+      - code
+      - research
+      - file
+      - debug
+    terminal:
+      - file
+      - code
+    code:
+      - terminal
+      - file
+      - debug
+    research:
+      - code
+      - file
+    file:
+      - terminal
+      - code
+    debug:
+      - code
+      - terminal

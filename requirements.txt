@@ -1,0 +1,91 @@
+# AI Terminal Agent - Requirements
+# Core dependencies
+
+# HTTP/API clients
+aiohttp>=3.9.0
+httpx>=0.25.0
+requests>=2.31.0
+
+# Async utilities
+asyncio>=3.4.3
+aiofiles>=23.2.1
+
+# LLM API clients
+openai>=1.12.0
+anthropic>=0.18.0
+
+# Data processing
+numpy>=1.24.0
+pandas>=2.0.0
+
+# Vector store / embeddings
+chromadb>=0.4.22
+sentence-transformers>=2.2.2
+faiss-cpu>=1.7.4
+
+# Configuration
+pyyaml>=6.0.1
+python-dotenv>=1.0.0
+pydantic>=2.5.0
+pydantic-settings>=2.1.0
+
+# CLI / Terminal UI
+rich>=13.7.0
+click>=8.1.7
+prompt-toolkit>=3.0.43
+
+# Web scraping / search
+beautifulsoup4>=4.12.0
+lxml>=5.1.0
+duckduckgo-search>=4.1.0
+
+# Database
+sqlalchemy>=2.0.25
+aiosqlite>=0.19.0
+
+# Security / Validation
+python-jose>=3.3.0
+passlib>=1.7.4
+cryptography>=41.0.0
+
+# Testing
+pytest>=7.4.0
+pytest-asyncio>=0.23.0
+pytest-cov>=4.1.0
+pytest-mock>=3.12.0
+
+# Code quality
+black>=24.1.0
+isort>=5.13.0
+flake8>=7.0.0
+mypy>=1.8.0
+
+# Logging / Monitoring
+structlog>=24.1.0
+python-json-logger>=2.0.7
+
+# Utilities
+tenacity>=8.2.0
+cachetools>=5.3.0
+python-dateutil>=2.8.2
+regex>=2023.12.25
+
+# Markdown / Documentation
+markdown>=3.5.0
+pygments>=2.17.0
+
+# Process management
+psutil>=5.9.0
+
+# Serialization
+msgpack>=1.0.7
+orjson>=3.9.0
+
+# Rate limiting
+ratelimit>=2.2.1
+aiolimiter>=1.1.0
+
+# Development dependencies (optional)
+# ipython>=8.18.0
+# jupyter>=1.0.0
+# notebook>=7.0.0

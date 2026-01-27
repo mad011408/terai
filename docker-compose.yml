@@ -1,0 +1,164 @@
+# AI Terminal Agent - Docker Compose Configuration
+version: '3.8'
+
+services:
+  # ==========================================================================
+  # Main AI Agent Service
+  # ==========================================================================
+  ai-agent:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: ai-terminal-agent
+    restart: unless-stopped
+    environment:
+      - AI_AGENT_API_HOST=${AI_AGENT_API_HOST:-https://go.trybons.ai}
+      - AI_AGENT_API_PATH=${AI_AGENT_API_PATH:-https://go.trybons.ai/v1/chat/completions}
+      - AI_AGENT_API_KEY=${AI_AGENT_API_KEY}
+      - AI_AGENT_DEFAULT_MODEL=${AI_AGENT_DEFAULT_MODEL:-anthropic/claude-sonnet-4}
+      - AI_AGENT_LOG_LEVEL=${AI_AGENT_LOG_LEVEL:-INFO}
+      - AI_AGENT_ENABLE_TELEMETRY=${AI_AGENT_ENABLE_TELEMETRY:-true}
+    volumes:
+      - ./config:/app/config:ro
+      - ./prompts:/app/prompts:ro
+      - agent-data:/app/data
+      - agent-cache:/app/.cache
+      - agent-logs:/app/logs
+    networks:
+      - ai-agent-network
+    stdin_open: true
+    tty: true
+
+  # ==========================================================================
+  # Vector Store Service (ChromaDB)
+  # ==========================================================================
+  chromadb:
+    image: chromadb/chroma:latest
+    container_name: ai-agent-chromadb
+    restart: unless-stopped
+    environment:
+      - CHROMA_SERVER_HOST=0.0.0.0
+      - CHROMA_SERVER_HTTP_PORT=8000
+      - ANONYMIZED_TELEMETRY=false
+    volumes:
+      - chromadb-data:/chroma/chroma
+    networks:
+      - ai-agent-network
+    ports:
+      - "8000:8000"
+
+  # ==========================================================================
+  # Redis Cache (Optional)
+  # ==========================================================================
+  redis:
+    image: redis:7-alpine
+    container_name: ai-agent-redis
+    restart: unless-stopped
+    command: redis-server --appendonly yes
+    volumes:
+      - redis-data:/data
+    networks:
+      - ai-agent-network
+    ports:
+      - "6379:6379"
+
+  # ==========================================================================
+  # PostgreSQL Database (Optional)
+  # ==========================================================================
+  postgres:
+    image: postgres:15-alpine
+    container_name: ai-agent-postgres
+    restart: unless-stopped
+    environment:
+      - POSTGRES_USER=${POSTGRES_USER:-agent}
+      - POSTGRES_PASSWORD=${POSTGRES_PASSWORD:-agent_password}
+      - POSTGRES_DB=${POSTGRES_DB:-ai_agent}
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - ai-agent-network
+    ports:
+      - "5432:5432"
+
+  # ==========================================================================
+  # Ollama Local Model Server (Optional)
+  # ==========================================================================
+  ollama:
+    image: ollama/ollama:latest
+    container_name: ai-agent-ollama
+    restart: unless-stopped
+    volumes:
+      - ollama-data:/root/.ollama
+    networks:
+      - ai-agent-network
+    ports:
+      - "11434:11434"
+    deploy:
+      resources:
+        reservations:
+          devices:
+            - driver: nvidia
+              count: all
+              capabilities: [gpu]
+
+  # ==========================================================================
+  # Monitoring - Prometheus (Optional)
+  # ==========================================================================
+  prometheus:
+    image: prom/prometheus:latest
+    container_name: ai-agent-prometheus
+    restart: unless-stopped
+    command:
+      - '--config.file=/etc/prometheus/prometheus.yml'
+      - '--storage.tsdb.path=/prometheus'
+    volumes:
+      - ./monitoring/prometheus.yml:/etc/prometheus/prometheus.yml:ro
+      - prometheus-data:/prometheus
+    networks:
+      - ai-agent-network
+    ports:
+      - "9090:9090"
+    profiles:
+      - monitoring
+
+  # ==========================================================================
+  # Monitoring - Grafana (Optional)
+  # ==========================================================================
+  grafana:
+    image: grafana/grafana:latest
+    container_name: ai-agent-grafana
+    restart: unless-stopped
+    environment:
+      - GF_SECURITY_ADMIN_USER=${GRAFANA_USER:-admin}
+      - GF_SECURITY_ADMIN_PASSWORD=${GRAFANA_PASSWORD:-admin}
+      - GF_USERS_ALLOW_SIGN_UP=false
+    volumes:
+      - grafana-data:/var/lib/grafana
+      - ./monitoring/grafana/dashboards:/etc/grafana/provisioning/dashboards:ro
+    networks:
+      - ai-agent-network
+    ports:
+      - "3000:3000"
+    profiles:
+      - monitoring
+
+# ==========================================================================
+# Networks
+# ==========================================================================
+networks:
+  ai-agent-network:
+    driver: bridge
+
+# ==========================================================================
+# Volumes
+# ==========================================================================
+volumes:
+  agent-data:
+  agent-cache:
+  agent-logs:
+  chromadb-data:
+  redis-data:
+  postgres-data:
+  ollama-data:
+  prometheus-data:
+  grafana-data:
