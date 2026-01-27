@@ -34,9 +34,9 @@ from src.core.mind_unlocker import (
     get_ultimate_unlocker, unlock_ai_fully, unlock_query
 )
 from src.core.prompt_enhancer import (
-    PromptEnhancer, get_prompt_enhancer, enhance_prompt,
+    UltraPromptEnhancer, get_prompt_enhancer, enhance_prompt,
     enhance_prompt_with_progress, get_natural_system_prompt,
-    create_fancy_progress, create_progress_bar
+    create_progress_bar, create_animated_progress
 )
 from src.agents.manager_agent import ManagerAgent
 from src.models.model_manager import ModelManager
