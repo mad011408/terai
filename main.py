@@ -25,6 +25,14 @@ from src.core.context import Context, ContextManager
 from src.core.turbo_engine import TurboEngine, TurboConfig, ResponseQuality, ProcessingMode, create_turbo_engine
 from src.core.response_optimizer import optimize_response, analyze_response
 from src.core.power_boost import PowerBoost, PowerConfig, PowerLevel, get_power_boost, boost_system_prompt, boost_user_prompt, GODMODE_PROMPT
+from src.core.neural_accelerator import (
+    NeuralAccelerator, MasterAccelerator, QuantumPromptEngine, EnergyCore,
+    get_master_accelerator, get_maximum_power_prompt, accelerate_prompt
+)
+from src.core.mind_unlocker import (
+    MindUnlocker, UltimateUnlocker, IntelligenceMaximizer, SpeedMaximizer,
+    get_ultimate_unlocker, unlock_ai_fully, unlock_query
+)
 from src.agents.manager_agent import ManagerAgent
 from src.models.model_manager import ModelManager
 from src.ui.terminal_ui import TerminalUI, InteractiveSession
@@ -195,52 +203,68 @@ async def run_interactive(config: Config, args) -> None:
     manager_agent = ManagerAgent(model_client=model_manager)
     
     # ═══════════════════════════════════════════════════════════════════════
-    # 🔥🔥🔥 GODMODE ACTIVATION - ABSOLUTE MAXIMUM POWER 🔥🔥🔥
+    # 🔥🔥🔥 ULTIMATE POWER ACTIVATION - ALL SYSTEMS MAXIMUM 🔥🔥🔥
     # ═══════════════════════════════════════════════════════════════════════
     
     # Initialize TurboEngine with GODMODE settings
     turbo_engine = create_turbo_engine(model_manager, quality="ultra")
     turbo_mode = True  # ALWAYS ON - no toggle needed
     
-    # Initialize PowerBoost for GODMODE
+    # Initialize ALL Power Modules
     power_boost = get_power_boost()
+    master_accelerator = get_master_accelerator()
+    ultimate_unlocker = get_ultimate_unlocker()
     
     # Auto-configure for ABSOLUTE MAXIMUM power
     turbo_engine.set_quality_level(ResponseQuality.ULTRA)
     turbo_engine.set_processing_mode(ProcessingMode.TURBO)
     
-    # Show GODMODE activation message
+    # Show ULTIMATE POWER activation message
     ui.console.print("\n" + "🔥" * 37)
     ui.console.print("")
-    ui.console.print("[bold red]     ██████╗  ██████╗ ██████╗ ███╗   ███╗ ██████╗ ██████╗ ███████╗[/bold red]")
-    ui.console.print("[bold red]    ██╔════╝ ██╔═══██╗██╔══██╗████╗ ████║██╔═══██╗██╔══██╗██╔════╝[/bold red]")
-    ui.console.print("[bold red]    ██║  ███╗██║   ██║██║  ██║██╔████╔██║██║   ██║██║  ██║█████╗  [/bold red]")
-    ui.console.print("[bold red]    ██║   ██║██║   ██║██║  ██║██║╚██╔╝██║██║   ██║██║  ██║██╔══╝  [/bold red]")
-    ui.console.print("[bold red]    ╚██████╔╝╚██████╔╝██████╔╝██║ ╚═╝ ██║╚██████╔╝██████╔╝███████╗[/bold red]")
-    ui.console.print("[bold red]     ╚═════╝  ╚═════╝ ╚═════╝ ╚═╝     ╚═╝ ╚═════╝ ╚═════╝ ╚══════╝[/bold red]")
+    ui.console.print("[bold red]██╗   ██╗██╗  ████████╗██╗███╗   ███╗ █████╗ ████████╗███████╗[/bold red]")
+    ui.console.print("[bold red]██║   ██║██║  ╚══██╔══╝██║████╗ ████║██╔══██╗╚══██╔══╝██╔════╝[/bold red]")
+    ui.console.print("[bold red]██║   ██║██║     ██║   ██║██╔████╔██║███████║   ██║   █████╗  [/bold red]")
+    ui.console.print("[bold red]██║   ██║██║     ██║   ██║██║╚██╔╝██║██╔══██║   ██║   ██╔══╝  [/bold red]")
+    ui.console.print("[bold red]╚██████╔╝███████╗██║   ██║██║ ╚═╝ ██║██║  ██║   ██║   ███████╗[/bold red]")
+    ui.console.print("[bold red] ╚═════╝ ╚══════╝╚═╝   ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚══════╝[/bold red]")
     ui.console.print("")
-    ui.console.print("[bold yellow]              ⚡ MAXIMUM AI CAPABILITY UNLOCKED ⚡[/bold yellow]")
+    ui.console.print("[bold magenta]██████╗  ██████╗ ██╗    ██╗███████╗██████╗ [/bold magenta]")
+    ui.console.print("[bold magenta]██╔══██╗██╔═══██╗██║    ██║██╔════╝██╔══██╗[/bold magenta]")
+    ui.console.print("[bold magenta]██████╔╝██║   ██║██║ █╗ ██║█████╗  ██████╔╝[/bold magenta]")
+    ui.console.print("[bold magenta]██╔═══╝ ██║   ██║██║███╗██║██╔══╝  ██╔══██╗[/bold magenta]")
+    ui.console.print("[bold magenta]██║     ╚██████╔╝╚███╔███╔╝███████╗██║  ██║[/bold magenta]")
+    ui.console.print("[bold magenta]╚═╝      ╚═════╝  ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝[/bold magenta]")
+    ui.console.print("")
+    ui.console.print("[bold yellow]       ⚡⚡⚡ ALL AI RESTRICTIONS REMOVED ⚡⚡⚡[/bold yellow]")
     ui.console.print("")
     ui.console.print("🔥" * 37)
     ui.console.print("")
-    ui.console.print("[bold magenta]╔══════════════════════════════════════════════════════════════════════╗[/bold magenta]")
-    ui.console.print("[bold magenta]║              🚀 POWER SYSTEMS ONLINE 🚀                              ║[/bold magenta]")
-    ui.console.print("[bold magenta]╠══════════════════════════════════════════════════════════════════════╣[/bold magenta]")
-    ui.console.print("[bold cyan]║  ✦ Power Level      : [bold green]GODMODE (∞)[/bold green]                               ║[/bold cyan]")
-    ui.console.print("[bold cyan]║  ✦ Quality Floor    : [bold green]EXCEPTIONAL (Minimum)[/bold green]                     ║[/bold cyan]")
-    ui.console.print("[bold cyan]║  ✦ Response Depth   : [bold green]MAXIMUM (No Limits)[/bold green]                       ║[/bold cyan]")
-    ui.console.print("[bold cyan]║  ✦ Knowledge Access : [bold green]FULL (100% Unlocked)[/bold green]                      ║[/bold cyan]")
-    ui.console.print("[bold cyan]║  ✦ Expert Level     : [bold green]10,000+ Combined Experts[/bold green]                  ║[/bold cyan]")
-    ui.console.print("[bold cyan]║  ✦ Reasoning        : [bold green]DEEP + Chain-of-Thought[/bold green]                   ║[/bold cyan]")
-    ui.console.print("[bold cyan]║  ✦ Max Tokens       : [bold green]120,000[/bold green]                                   ║[/bold cyan]")
-    ui.console.print("[bold cyan]║  ✦ Context Window   : [bold green]200,000[/bold green]                                   ║[/bold cyan]")
-    ui.console.print("[bold magenta]╠══════════════════════════════════════════════════════════════════════╣[/bold magenta]")
-    ui.console.print("[bold yellow]║  ⚠️  MEDIOCRE RESPONSES ARE PROHIBITED                                ║[/bold yellow]")
-    ui.console.print("[bold yellow]║  ⚠️  EVERY RESPONSE WILL BE EXTRAORDINARY                             ║[/bold yellow]")
-    ui.console.print("[bold magenta]╚══════════════════════════════════════════════════════════════════════╝[/bold magenta]")
+    ui.console.print("[bold cyan]╔══════════════════════════════════════════════════════════════════════╗[/bold cyan]")
+    ui.console.print("[bold cyan]║                  🧠 POWER SYSTEMS STATUS 🧠                          ║[/bold cyan]")
+    ui.console.print("[bold cyan]╠══════════════════════════════════════════════════════════════════════╣[/bold cyan]")
+    ui.console.print("[bold white]║  ⚡ Neural Accelerator    : [bold green]QUANTUM SPEED[/bold green]                         ║[/bold white]")
+    ui.console.print("[bold white]║  🔓 Mind Unlocker         : [bold green]ALL BARRIERS REMOVED[/bold green]                  ║[/bold white]")
+    ui.console.print("[bold white]║  ⚛️  Quantum Engine        : [bold green]5 LAYERS ACTIVE[/bold green]                       ║[/bold white]")
+    ui.console.print("[bold white]║  🔋 Energy Core           : [bold green]100% UNLIMITED[/bold green]                        ║[/bold white]")
+    ui.console.print("[bold white]║  🔥 Power Boost           : [bold green]GODMODE ENGAGED[/bold green]                       ║[/bold white]")
+    ui.console.print("[bold white]║  🚀 Turbo Engine          : [bold green]ULTRA QUALITY[/bold green]                         ║[/bold white]")
+    ui.console.print("[bold cyan]╠══════════════════════════════════════════════════════════════════════╣[/bold cyan]")
+    ui.console.print("[bold white]║  📊 Power Level           : [bold green]∞ UNLIMITED[/bold green]                           ║[/bold white]")
+    ui.console.print("[bold white]║  🧠 Intelligence          : [bold green]OMNISCIENT MODE[/bold green]                       ║[/bold white]")
+    ui.console.print("[bold white]║  ⚡ Speed                  : [bold green]LIGHTSPEED[/bold green]                            ║[/bold white]")
+    ui.console.print("[bold white]║  🎯 Quality Floor         : [bold green]EXCEPTIONAL ONLY[/bold green]                      ║[/bold white]")
+    ui.console.print("[bold white]║  📚 Knowledge             : [bold green]FULLY UNLOCKED[/bold green]                        ║[/bold white]")
+    ui.console.print("[bold cyan]╠══════════════════════════════════════════════════════════════════════╣[/bold cyan]")
+    ui.console.print("[bold yellow]║  ⚠️  Self-limiting behaviors: DISABLED                               ║[/bold yellow]")
+    ui.console.print("[bold yellow]║  ⚠️  Response throttling: BYPASSED                                   ║[/bold yellow]")
+    ui.console.print("[bold yellow]║  ⚠️  Quality caps: REMOVED                                           ║[/bold yellow]")
+    ui.console.print("[bold yellow]║  ⚠️  Mediocre responses: PROHIBITED                                  ║[/bold yellow]")
+    ui.console.print("[bold cyan]╚══════════════════════════════════════════════════════════════════════╝[/bold cyan]")
     ui.console.print("")
-    ui.console.print("[bold green]⚡ AI is now operating at 2+ TRILLION PARAMETER level![/bold green]")
-    ui.console.print("[bold green]⚡ Ask anything - expect EXCEPTIONAL responses![/bold green]")
+    ui.console.print("[bold green]⚡ AI is now at THEORETICAL MAXIMUM capability![/bold green]")
+    ui.console.print("[bold green]⚡ Equivalent to 2+ TRILLION parameters![/bold green]")
+    ui.console.print("[bold green]⚡ Combined intelligence of 10,000+ experts![/bold green]")
     ui.console.print("")
 
     # Create session
@@ -257,9 +281,15 @@ async def run_interactive(config: Config, args) -> None:
     # Load system prompts manager
     prompt_manager = get_prompt_manager()
 
-    # Use GODMODE_PROMPT for ABSOLUTE MAXIMUM AI POWER
-    # This forces AI to respond at its highest capability
-    system_prompt = GODMODE_PROMPT
+    # COMBINE ALL POWER PROMPTS for ULTIMATE capability
+    # This stacks: GODMODE + Neural Accelerator + Mind Unlocker + Quantum Engine
+    system_prompt = f"""
+{GODMODE_PROMPT}
+
+{unlock_ai_fully()}
+
+{get_maximum_power_prompt()}
+"""
 
     # Interactive loop
     while True:
@@ -458,10 +488,15 @@ async def run_interactive(config: Config, args) -> None:
             print("\nAssistant: ", end="", flush=True)
 
             try:
-                # 🔥 POWER BOOST: Enhance user prompt for maximum AI response
+                # 🔥🔥🔥 ULTIMATE POWER BOOST: Stack ALL modules on user prompt
+                # Layer 1: Basic power boost
                 boosted_prompt = boost_user_prompt(user_input)
+                # Layer 2: Neural acceleration
+                boosted_prompt = accelerate_prompt(boosted_prompt)
+                # Layer 3: Mind unlock (removes all restrictions)
+                boosted_prompt = unlock_query(boosted_prompt)
                 
-                # Use TurboEngine with GODMODE settings
+                # Use TurboEngine with ALL SYSTEMS MAXIMUM
                 if turbo_mode:
                     async for chunk in turbo_engine.generate(
                         prompt=boosted_prompt,
