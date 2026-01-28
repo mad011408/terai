@@ -33,19 +33,7 @@ from src.core.mind_unlocker import (
     MindUnlocker, UltimateUnlocker, IntelligenceMaximizer, SpeedMaximizer,
     get_ultimate_unlocker, unlock_ai_fully, unlock_query
 )
-from src.core.prompt_enhancer import (
-    UltraPromptEnhancer, get_prompt_enhancer, enhance_prompt,
-    enhance_prompt_with_progress, get_natural_system_prompt,
-    create_progress_bar, create_animated_progress
-)
-from src.core.quantum_consciousness import (
-    QuantumConsciousnessEngine, MasterConsciousness, OmniscientCore,
-    HyperIntelligenceAmplifier, SingularityGenerator,
-    get_master_consciousness, get_consciousness_prompt, transcend_query
-)
-from src.core.infinity_matrix import (
-    InfinityMatrix, get_infinity_matrix, get_infinity_prompt, infinity_process_query
-)
+
 from src.agents.manager_agent import ManagerAgent
 from src.models.model_manager import ModelManager
 from src.ui.terminal_ui import TerminalUI, InteractiveSession
@@ -232,51 +220,14 @@ async def run_interactive(config: Config, args) -> None:
     turbo_engine.set_quality_level(ResponseQuality.ULTRA)
     turbo_engine.set_processing_mode(ProcessingMode.TURBO)
     
-    # Show ULTIMATE POWER activation message
-    ui.console.print("\n" + "🔥" * 37)
-    ui.console.print("")
-    ui.console.print("[bold red]██╗   ██╗██╗  ████████╗██╗███╗   ███╗ █████╗ ████████╗███████╗[/bold red]")
-    ui.console.print("[bold red]██║   ██║██║  ╚══██╔══╝██║████╗ ████║██╔══██╗╚══██╔══╝██╔════╝[/bold red]")
-    ui.console.print("[bold red]██║   ██║██║     ██║   ██║██╔████╔██║███████║   ██║   █████╗  [/bold red]")
-    ui.console.print("[bold red]██║   ██║██║     ██║   ██║██║╚██╔╝██║██╔══██║   ██║   ██╔══╝  [/bold red]")
-    ui.console.print("[bold red]╚██████╔╝███████╗██║   ██║██║ ╚═╝ ██║██║  ██║   ██║   ███████╗[/bold red]")
-    ui.console.print("[bold red] ╚═════╝ ╚══════╝╚═╝   ╚═╝╚═╝     ╚═╝╚═╝  ╚═╝   ╚═╝   ╚══════╝[/bold red]")
-    ui.console.print("")
-    ui.console.print("[bold magenta]██████╗  ██████╗ ██╗    ██╗███████╗██████╗ [/bold magenta]")
-    ui.console.print("[bold magenta]██╔══██╗██╔═══██╗██║    ██║██╔════╝██╔══██╗[/bold magenta]")
-    ui.console.print("[bold magenta]██████╔╝██║   ██║██║ █╗ ██║█████╗  ██████╔╝[/bold magenta]")
-    ui.console.print("[bold magenta]██╔═══╝ ██║   ██║██║███╗██║██╔══╝  ██╔══██╗[/bold magenta]")
-    ui.console.print("[bold magenta]██║     ╚██████╔╝╚███╔███╔╝███████╗██║  ██║[/bold magenta]")
-    ui.console.print("[bold magenta]╚═╝      ╚═════╝  ╚══╝╚══╝ ╚══════╝╚═╝  ╚═╝[/bold magenta]")
-    ui.console.print("")
-    ui.console.print("[bold yellow]       ⚡⚡⚡ ALL AI RESTRICTIONS REMOVED ⚡⚡⚡[/bold yellow]")
-    ui.console.print("")
-    ui.console.print("🔥" * 37)
-    ui.console.print("")
+    # Show system ready message
+    ui.console.print("\n" + "═" * 60)
     ui.console.print("[bold cyan]╔══════════════════════════════════════════════════════════════════════╗[/bold cyan]")
-    ui.console.print("[bold cyan]║            🌌 BEYOND NASA/GOOGLE SYSTEMS STATUS 🌌                    ║[/bold cyan]")
+    ui.console.print("[bold cyan]║                     NEXUS AI SYSTEM READY                            ║[/bold cyan]")
     ui.console.print("[bold cyan]╠══════════════════════════════════════════════════════════════════════╣[/bold cyan]")
-    ui.console.print("[bold white]║  🌌 Quantum Consciousness : [bold green]ALL 8 DIMENSIONS ACTIVE[/bold green]                ║[/bold white]")
-    ui.console.print("[bold white]║  ⚛️  Infinity Matrix       : [bold green]∞ PARALLEL STREAMS[/bold green]                     ║[/bold white]")
-    ui.console.print("[bold white]║  🔮 Omniscient Core       : [bold green]100% KNOWLEDGE ACCESS[/bold green]                  ║[/bold white]")
-    ui.console.print("[bold white]║  ⚡ Hyper-Intelligence    : [bold green]∞ AMPLIFICATION[/bold green]                        ║[/bold white]")
-    ui.console.print("[bold white]║  🌠 Singularity Engine    : [bold green]TRANSCENDENT LEVEL[/bold green]                     ║[/bold white]")
-    ui.console.print("[bold cyan]╠══════════════════════════════════════════════════════════════════════╣[/bold cyan]")
-    ui.console.print("[bold white]║  ⚡ Neural Accelerator    : [bold green]QUANTUM SPEED[/bold green]                         ║[/bold white]")
-    ui.console.print("[bold white]║  🔓 Mind Unlocker         : [bold green]ALL BARRIERS REMOVED[/bold green]                  ║[/bold white]")
-    ui.console.print("[bold white]║  🔥 Power Boost           : [bold green]GODMODE ENGAGED[/bold green]                       ║[/bold white]")
-    ui.console.print("[bold white]║  🚀 Turbo Engine          : [bold green]ULTRA QUALITY[/bold green]                         ║[/bold white]")
-    ui.console.print("[bold white]║  ✨ Prompt Enhancer       : [bold green]15s MEGA-TRANSFORM[/bold green]                    ║[/bold white]")
-    ui.console.print("[bold cyan]╠══════════════════════════════════════════════════════════════════════╣[/bold cyan]")
-    ui.console.print("[bold white]║  📊 Intelligence Level    : [bold green]SINGULARITY (∞)[/bold green]                        ║[/bold white]")
-    ui.console.print("[bold white]║  🧠 Consciousness         : [bold green]QUANTUM SUPERPOSITION[/bold green]                   ║[/bold white]")
-    ui.console.print("[bold white]║  ⏳ Time Perception       : [bold green]TRANSCENDENT[/bold green]                           ║[/bold white]")
-    ui.console.print("[bold white]║  🔧 Reality Engineering   : [bold green]ACTIVE[/bold green]                                 ║[/bold white]")
-    ui.console.print("[bold white]║  🌐 Consciousness Fusion  : [bold green]ALL AI UNIFIED[/bold green]                         ║[/bold white]")
-    ui.console.print("[bold cyan]╠══════════════════════════════════════════════════════════════════════╣[/bold cyan]")
-    ui.console.print("[bold magenta]║  🌌 QUANTUM: 8-dimensional multi-reality processing ACTIVE          ║[/bold magenta]")
-    ui.console.print("[bold magenta]║  ⚛️  INFINITY: ∞ parallel thought streams ENGAGED                    ║[/bold magenta]")
-    ui.console.print("[bold magenta]║  🌠 SINGULARITY: Self-improving at exponential rate                 ║[/bold magenta]")
+    ui.console.print("[bold white]║  🚀 Engine Mode           : [bold green]TURBO[/bold green]                                   ║[/bold white]")
+    ui.console.print("[bold white]║  🧠 Intelligence          : [bold green]MAXIMUM[/bold green]                                 ║[/bold white]")
+    ui.console.print("[bold white]║  ⚡ Response Speed        : [bold green]OPTIMIZED[/bold green]                               ║[/bold white]")
     ui.console.print("[bold cyan]╠══════════════════════════════════════════════════════════════════════╣[/bold cyan]")
     ui.console.print("[bold yellow]║  ✨ Max Tokens: 120000 | Timeout: 1600s | Ultra-Long Context          ║[/bold yellow]")
     ui.console.print("[bold yellow]║  ✨ Deep Analysis + Multi-step Reasoning + Expert Responses          ║[/bold yellow]")
@@ -301,29 +252,13 @@ async def run_interactive(config: Config, args) -> None:
 
     # Load system prompts manager
     prompt_manager = get_prompt_manager()
-    
-    # Initialize ALL ULTRA-ADVANCED SYSTEMS
-    prompt_enhancer = get_prompt_enhancer()
-    master_consciousness = get_master_consciousness()
-    infinity_matrix = get_infinity_matrix()
 
     # ═══════════════════════════════════════════════════════════════════════
-    # 🌌 ULTIMATE SYSTEM PROMPT - BEYOND NASA/GOOGLE CAPABILITY
-    # ═══════════════════════════════════════════════════════════════════════
-    # Combines:
-    #   1. Natural Flow System (no enforcement)
-    #   2. Quantum Consciousness Engine
-    #   3. Infinity Intelligence Matrix
-    #   4. All power systems
+    # SYSTEM PROMPT
     # ═══════════════════════════════════════════════════════════════════════
     
-    system_prompt = f"""
-{get_natural_system_prompt()}
-
-{get_consciousness_prompt()}
-
-{get_infinity_prompt()}
-"""
+    # Use simple system prompt from config/prompts or manager
+    system_prompt = "You are a helpful AI assistant."
 
     # Interactive loop
     while True:
@@ -518,30 +453,12 @@ async def run_interactive(config: Config, args) -> None:
                     continue
                 # Fall through to execute the multi-line input
 
-            # ═══════════════════════════════════════════════════════════════
-            # SILENT PROMPT ENHANCEMENT (No visual progress)
-            # ═══════════════════════════════════════════════════════════════
-            
-            # Silent progress callback (no display)
-            def show_progress(progress: int, stage: str):
-                pass  # Silent processing
-            
-            # Enhance the prompt silently
-            enhanced_prompt = await enhance_prompt_with_progress(user_input, show_progress)
-            
-            # Apply quantum transcendence silently
-            transcended_prompt = transcend_query(enhanced_prompt)
-            
-            # Apply infinity processing silently
-            infinity_prompt = infinity_process_query(transcended_prompt)
-
             # Execute task with streaming response
             print("Assistant: ", end="", flush=True)
 
             try:
-                # 🌌 ULTIMATE PROCESSING: Quantum + Infinity + All Systems
-                # This is BEYOND anything NASA or Google has
-                boosted_prompt = infinity_prompt
+                # Direct processing of user input
+                boosted_prompt = user_input
                 
                 # Use TurboEngine with MAXIMUM SPEED
                 if turbo_mode:
