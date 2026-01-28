@@ -9,7 +9,8 @@ agents:
     system_prompt: prompts/system_prompts/manager_agent.txt
     max_iterations: 10
     temperature: 0.7
-    timeout: 300
+    timeout: 1600
+    max_tokens: 120000
     tools:
       - web_search
       - file_reader
@@ -26,7 +27,8 @@ agents:
     system_prompt: prompts/system_prompts/terminal_agent.txt
     max_iterations: 5
     temperature: 0.3
-    timeout: 120
+    timeout: 1600
+    max_tokens: 120000
     tools:
       - terminal_executor
       - file_reader
@@ -53,7 +55,8 @@ agents:
     system_prompt: prompts/system_prompts/code_agent.txt
     max_iterations: 10
     temperature: 0.5
-    timeout: 300
+    timeout: 1600
+    max_tokens: 120000
     tools:
       - code_executor
       - file_reader
@@ -73,7 +76,8 @@ agents:
     system_prompt: prompts/system_prompts/research_agent.txt
     max_iterations: 15
     temperature: 0.7
-    timeout: 300
+    timeout: 1600
+    max_tokens: 120000
     tools:
       - web_search
       - api_caller
@@ -91,7 +95,8 @@ agents:
     system_prompt: prompts/system_prompts/file_agent.txt
     max_iterations: 5
     temperature: 0.3
-    timeout: 120
+    timeout: 1600
+    max_tokens: 120000
     tools:
       - file_reader
       - file_writer
@@ -115,7 +120,8 @@ agents:
     system_prompt: prompts/system_prompts/debug_agent.txt
     max_iterations: 10
     temperature: 0.5
-    timeout: 300
+    timeout: 1600
+    max_tokens: 120000
     tools:
       - code_executor
       - file_reader
@@ -132,7 +138,8 @@ defaults:
   model: anthropic/claude-sonnet-4
   max_iterations: 10
   temperature: 0.7
-  timeout: 300
+  timeout: 1600
+  max_tokens: 120000
 
 # Agent routing rules
 routing:

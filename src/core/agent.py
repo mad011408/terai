@@ -41,10 +41,10 @@ class AgentConfig:
     description: str
     model: str = "anthropic/claude-sonnet-4"
     temperature: float = 0.7
-    max_tokens: int = 4096
+    max_tokens: int = 120000
     reasoning_strategy: ReasoningStrategy = ReasoningStrategy.REACT
     max_iterations: int = 10
-    timeout: float = 300.0
+    timeout: float = 1600.0
     retry_attempts: int = 3
     tools: List[str] = field(default_factory=list)
     guardrails: List[str] = field(default_factory=list)

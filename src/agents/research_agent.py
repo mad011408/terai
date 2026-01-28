@@ -94,7 +94,7 @@ Always cite your sources when presenting findings."""
                 prompt=prompt,
                 system=self.get_system_prompt(),
                 temperature=0.5,
-                max_tokens=2048
+                max_tokens=120000
             )
             thought_content = response.content
         else:

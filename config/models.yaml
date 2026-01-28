@@ -5,7 +5,7 @@
 api:
   default_host: "https://go.trybons.ai"
   default_path: "https://go.trybons.ai/v1/chat/completions"
-  timeout: 300
+  timeout: 1600
   retry_attempts: 3
   retry_delay: 1.0
 
@@ -16,7 +16,7 @@ models:
     provider: anthropic
     display_name: Claude Sonnet 4
     description: Fast and capable model for general tasks
-    max_tokens: 8192
+    max_tokens: 120000
     context_window: 200000
     supports_streaming: true
     supports_functions: true
@@ -28,7 +28,7 @@ models:
     provider: anthropic
     display_name: Claude Opus 4.1
     description: Most capable model for complex reasoning
-    max_tokens: 8192
+    max_tokens: 120000
     context_window: 200000
     supports_streaming: true
     supports_functions: true
@@ -40,7 +40,7 @@ models:
     provider: anthropic
     display_name: Claude Opus 4.1 (2025-08-05)
     description: Claude Opus 4.1 snapshot from August 2025
-    max_tokens: 16384
+    max_tokens: 120000
     context_window: 200000
     supports_streaming: true
     supports_functions: true
@@ -52,7 +52,7 @@ models:
     provider: anthropic
     display_name: Claude Opus 4.1 Bedrock (v1.0)
     description: Claude Opus 4.1 for AWS Bedrock
-    max_tokens: 16384
+    max_tokens: 120000
     context_window: 200000
     supports_streaming: true
     supports_functions: true
@@ -64,7 +64,7 @@ models:
     provider: anthropic
     display_name: Claude Sonnet 4.5
     description: Enhanced sonnet model
-    max_tokens: 8192
+    max_tokens: 120000
     context_window: 200000
     supports_streaming: true
     supports_functions: true
@@ -74,7 +74,7 @@ models:
     provider: anthropic
     display_name: Claude Opus 4.5
     description: Enhanced opus model
-    max_tokens: 8192
+    max_tokens: 120000
     context_window: 200000
     supports_streaming: true
     supports_functions: true
@@ -84,7 +84,7 @@ models:
     provider: anthropic
     display_name: Claude Opus 5.0
     description: Latest opus model
-    max_tokens: 16384
+    max_tokens: 120000
     context_window: 500000
     supports_streaming: true
     supports_functions: true
@@ -94,7 +94,7 @@ models:
     provider: anthropic
     display_name: Claude Opus 1.0
     description: Original opus model
-    max_tokens: 4096
+    max_tokens: 120000
     context_window: 100000
     supports_streaming: true
     supports_functions: true
@@ -103,7 +103,7 @@ models:
     provider: anthropic
     display_name: Claude Opus 4.5 Thinking
     description: Opus with extended thinking
-    max_tokens: 32768
+    max_tokens: 120000
     context_window: 200000
     supports_streaming: true
     supports_functions: true
@@ -114,7 +114,7 @@ models:
     provider: openai
     display_name: GPT-5 Codex
     description: Specialized for code generation
-    max_tokens: 8192
+    max_tokens: 120000
     context_window: 128000
     supports_streaming: true
     supports_functions: true
@@ -125,7 +125,7 @@ models:
     provider: openai
     display_name: GPT-5.1 Codex Max
     description: Enhanced code generation model
-    max_tokens: 16384
+    max_tokens: 120000
     context_window: 256000
     supports_streaming: true
     supports_functions: true
@@ -134,7 +134,7 @@ models:
     provider: openai
     display_name: GPT-5.1 (2025-11-13)
     description: Latest GPT-5.1 snapshot
-    max_tokens: 16384
+    max_tokens: 120000
     context_window: 256000
     supports_streaming: true
     supports_functions: true
@@ -145,7 +145,7 @@ models:
     provider: openai
     display_name: O3
     description: Advanced reasoning model
-    max_tokens: 16384
+    max_tokens: 120000
     context_window: 128000
     supports_streaming: true
     supports_functions: true
@@ -155,7 +155,7 @@ models:
     provider: openai
     display_name: O4
     description: Next-gen reasoning model
-    max_tokens: 32768
+    max_tokens: 120000
     context_window: 256000
     supports_streaming: true
     supports_functions: true
@@ -165,7 +165,7 @@ models:
     provider: openai
     display_name: O5
     description: Latest reasoning model
-    max_tokens: 65536
+    max_tokens: 120000
     context_window: 500000
     supports_streaming: true
     supports_functions: true
@@ -176,7 +176,7 @@ models:
     provider: google
     display_name: Gemini 3 Pro
     description: Google's advanced multimodal model
-    max_tokens: 8192
+    max_tokens: 120000
     context_window: 1000000
     supports_streaming: true
     supports_functions: true
@@ -187,7 +187,7 @@ models:
     provider: xai
     display_name: Grok 4.1 Thinking
     description: xAI's reasoning model
-    max_tokens: 16384
+    max_tokens: 120000
     context_window: 128000
     supports_streaming: true
     supports_functions: true
@@ -198,7 +198,7 @@ models:
     provider: mistral
     display_name: Mistral Large 3 (675B)
     description: Mistral's largest cloud model
-    max_tokens: 32768
+    max_tokens: 120000
     context_window: 256000
     supports_streaming: true
     supports_functions: true
@@ -208,7 +208,7 @@ models:
     provider: zhipu
     display_name: GLM-4.6 (Free)
     description: Free tier model
-    max_tokens: 4096
+    max_tokens: 120000
     context_window: 128000
     supports_streaming: true
     free_tier: true
@@ -217,7 +217,7 @@ models:
     provider: openai
     display_name: Sora 2 Pro
     description: Video generation model
-    max_tokens: 4096
+    max_tokens: 120000
     context_window: 32000
     supports_video: true
 
@@ -226,7 +226,7 @@ models:
     provider: ollama
     display_name: Kimi K2 Thinking (Local)
     description: Local thinking model via Ollama
-    max_tokens: 8192
+    max_tokens: 120000
     context_window: 32000
     supports_streaming: true
     local: true
@@ -257,10 +257,11 @@ groups:
 defaults:
   model: anthropic/claude-sonnet-4
   temperature: 0.7
-  max_tokens: 4096
+  max_tokens: 120000
   top_p: 1.0
   frequency_penalty: 0.0
   presence_penalty: 0.0
+  timeout: 1600
 
 # Fallback Configuration
 fallback:
@@ -271,3 +272,4 @@ fallback:
     - gemini-3-pro
     - z-ai/glm-4.6
   max_retries: 3
+  timeout: 1600

@@ -92,7 +92,7 @@ Always explain what each command does before executing."""
                 prompt=prompt,
                 system=self.get_system_prompt(),
                 temperature=0.3,  # Lower temperature for command generation
-                max_tokens=1024
+                max_tokens=120000
             )
             thought_content = response.content
         else:

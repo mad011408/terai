@@ -66,7 +66,7 @@ class ConversationMemory:
     """
 
     def __init__(self, max_messages: int = 100,
-                 max_tokens: int = 4000,
+                 max_tokens: int = 120000,
                  summarization_threshold: int = 50):
         self.messages: List[MemoryMessage] = []
         self.summaries: List[ConversationSummary] = []
@@ -335,7 +335,7 @@ class TokenLimitedMemory(ConversationMemory):
     Memory that limits by token count rather than message count.
     """
 
-    def __init__(self, max_tokens: int = 4000):
+    def __init__(self, max_tokens: int = 120000):
         super().__init__(max_tokens=max_tokens, max_messages=10000)
 
     def _check_and_trim(self) -> None:

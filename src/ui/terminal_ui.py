@@ -73,7 +73,12 @@ class Console:
     def __init__(self, use_rich: bool = True):
         self.use_rich = use_rich and RICH_AVAILABLE
         if self.use_rich:
-            self.console = RichConsole()
+            # Force UTF-8 for Windows to support emojis
+            if sys.platform == 'win32':
+                import io
+                sys.stdout = io.TextIOWrapper(sys.stdout.buffer, encoding='utf-8', errors='replace')
+                sys.stderr = io.TextIOWrapper(sys.stderr.buffer, encoding='utf-8', errors='replace')
+            self.console = RichConsole(force_terminal=True, legacy_windows=False)
         else:
             self.console = None
 

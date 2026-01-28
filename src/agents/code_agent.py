@@ -98,7 +98,7 @@ Always provide code in markdown code blocks with language specification."""
                 prompt=prompt,
                 system=self.get_system_prompt(),
                 temperature=0.5,
-                max_tokens=4096
+                max_tokens=120000
             )
             thought_content = response.content
         else:
@@ -171,7 +171,7 @@ Provide only the code in a code block."""
                 prompt=prompt,
                 system=self.get_system_prompt(),
                 temperature=0.5,
-                max_tokens=4096
+                max_tokens=120000
             )
 
             code = self._extract_code_from_response(response.content, language)
@@ -388,7 +388,7 @@ Provide the refactored code with explanations for changes."""
                 prompt=prompt,
                 system=self.get_system_prompt(),
                 temperature=0.3,
-                max_tokens=4096
+                max_tokens=120000
             )
             return response.content
         else:

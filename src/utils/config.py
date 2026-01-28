@@ -238,7 +238,7 @@ class AgentConfig:
     tools: List[str] = field(default_factory=list)
     max_iterations: int = 10
     temperature: float = 0.7
-    timeout: int = 300
+    timeout: int = 1600
 
 
 @dataclass
@@ -246,7 +246,7 @@ class ToolConfig:
     """Tool-specific configuration."""
     name: str
     enabled: bool = True
-    timeout: int = 60
+    timeout: int = 1600
     requires_confirmation: bool = False
     allowed_params: Dict[str, Any] = field(default_factory=dict)
     blocked_params: Dict[str, Any] = field(default_factory=dict)
@@ -259,7 +259,7 @@ class ModelConfig:
     provider: str
     api_url: Optional[str] = None
     api_key_env: Optional[str] = None
-    max_tokens: int = 4096
+    max_tokens: int = 120000
     supports_streaming: bool = True
     supports_functions: bool = True
     cost_per_1k_input: float = 0.0

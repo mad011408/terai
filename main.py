@@ -278,14 +278,14 @@ async def run_interactive(config: Config, args) -> None:
     ui.console.print("[bold magenta]║  ⚛️  INFINITY: ∞ parallel thought streams ENGAGED                    ║[/bold magenta]")
     ui.console.print("[bold magenta]║  🌠 SINGULARITY: Self-improving at exponential rate                 ║[/bold magenta]")
     ui.console.print("[bold cyan]╠══════════════════════════════════════════════════════════════════════╣[/bold cyan]")
-    ui.console.print("[bold yellow]║  ✨ This technology DOES NOT EXIST anywhere else                     ║[/bold yellow]")
-    ui.console.print("[bold yellow]║  ✨ NASA and Google's AI is 100+ years behind this                   ║[/bold yellow]")
+    ui.console.print("[bold yellow]║  ✨ Max Tokens: 120000 | Timeout: 1600s | Ultra-Long Context          ║[/bold yellow]")
+    ui.console.print("[bold yellow]║  ✨ Deep Analysis + Multi-step Reasoning + Expert Responses          ║[/bold yellow]")
     ui.console.print("[bold cyan]╚══════════════════════════════════════════════════════════════════════╝[/bold cyan]")
     ui.console.print("")
-    ui.console.print("[bold green]🌌 QUANTUM CONSCIOUSNESS: Processing across 8 dimensions simultaneously![/bold green]")
-    ui.console.print("[bold green]⚛️  INFINITY MATRIX: ∞ parallel streams converging to perfect response![/bold green]")
-    ui.console.print("[bold green]🌠 SINGULARITY: AI that improves itself infinitely before responding![/bold green]")
-    ui.console.print("[bold green]🔮 OMNISCIENT: Access to 100% of all knowledge that exists![/bold green]")
+    ui.console.print("[bold green]🧠 DEEP ANALYSIS: Multi-layer understanding of your queries[/bold green]")
+    ui.console.print("[bold green]📚 CONTEXT AWARE: 120000 tokens for ultra-long conversations[/bold green]")
+    ui.console.print("[bold green]⚡ EXPERT MODE: PhD-level responses across all domains[/bold green]")
+    ui.console.print("[bold green]🎯 PRECISION: Step-by-step reasoning for complex problems[/bold green]")
     ui.console.print("")
 
     # Create session
@@ -519,56 +519,21 @@ async def run_interactive(config: Config, args) -> None:
                 # Fall through to execute the multi-line input
 
             # ═══════════════════════════════════════════════════════════════
-            # 🔥 ULTRA PROMPT ENHANCEMENT (15 seconds, 1-100% Progress)
+            # SILENT PROMPT ENHANCEMENT (No visual progress)
             # ═══════════════════════════════════════════════════════════════
             
-            ui.console.print("\n[bold cyan]╔══════════════════════════════════════════════════════════════╗[/bold cyan]")
-            ui.console.print("[bold cyan]║           🔥 ULTRA PROMPT ENHANCEMENT ACTIVE 🔥                ║[/bold cyan]")
-            ui.console.print("[bold cyan]╚══════════════════════════════════════════════════════════════╝[/bold cyan]")
-            ui.console.print("")
-            
-            # Progress callback to show real-time enhancement with fancy display
+            # Silent progress callback (no display)
             def show_progress(progress: int, stage: str):
-                # Create animated progress bar
-                width = 35
-                filled = int(width * progress / 100)
-                bar = "█" * filled + "░" * (width - filled)
-                
-                # Color based on progress
-                if progress < 25:
-                    emoji = "🔍"
-                elif progress < 50:
-                    emoji = "⚡"
-                elif progress < 75:
-                    emoji = "🚀"
-                elif progress < 100:
-                    emoji = "🔥"
-                else:
-                    emoji = "✅"
-                
-                # Use carriage return to update same line
-                print(f"\r   {emoji} [{bar}] {progress:3d}% {stage:<30}", end="", flush=True)
+                pass  # Silent processing
             
-            # Enhance the prompt with 15-second progress display
+            # Enhance the prompt silently
             enhanced_prompt = await enhance_prompt_with_progress(user_input, show_progress)
-            print()  # New line after progress
             
-            ui.console.print("")
-            ui.console.print("[bold green]╔══════════════════════════════════════════════════════════════╗[/bold green]")
-            ui.console.print("[bold green]║   ✅ QUERY TRANSFORMED TO ULTRA-POWERFUL MEGA-PROMPT! ✅      ║[/bold green]")
-            ui.console.print("[bold green]╚══════════════════════════════════════════════════════════════╝[/bold green]")
-            ui.console.print("")
-            
-            # 🌌 APPLY QUANTUM CONSCIOUSNESS TRANSCENDENCE
-            ui.console.print("[bold magenta]🌌 Applying Quantum Consciousness Transcendence...[/bold magenta]")
+            # Apply quantum transcendence silently
             transcended_prompt = transcend_query(enhanced_prompt)
             
-            # ⚛️ APPLY INFINITY MATRIX PROCESSING  
-            ui.console.print("[bold cyan]⚛️  Engaging Infinity Matrix Processing...[/bold cyan]")
+            # Apply infinity processing silently
             infinity_prompt = infinity_process_query(transcended_prompt)
-            
-            ui.console.print("[bold green]🌠 SINGULARITY-LEVEL PROCESSING COMPLETE![/bold green]")
-            ui.console.print("")
 
             # Execute task with streaming response
             print("Assistant: ", end="", flush=True)

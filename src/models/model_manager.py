@@ -222,7 +222,7 @@ class ModelManager:
     async def generate(self, prompt: str, model: Optional[str] = None,
                       system: Optional[str] = None,
                       temperature: float = 0.7,
-                      max_tokens: int = 4096,
+                      max_tokens: int = 120000,
                       stream: bool = False,
                       **kwargs) -> Union[GenerationResponse, AsyncGenerator[str, None]]:
         """

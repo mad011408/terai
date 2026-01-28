@@ -86,7 +86,7 @@ class AnthropicClient(BaseModelClient):
         body = {
             "model": model_override or self.model,
             "messages": self._build_messages(request),
-            "max_tokens": request.max_tokens or 4096,
+            "max_tokens": request.max_tokens or 120000,
         }
 
         # Add system prompt if provided
@@ -150,7 +150,7 @@ class AnthropicClient(BaseModelClient):
                 self.api_url,
                 json=body,
                 headers=headers,
-                timeout=aiohttp.ClientTimeout(total=120)
+                timeout=aiohttp.ClientTimeout(total=1600)
             ) as response:
                 if response.status != 200:
                     error_text = await response.text()
@@ -176,7 +176,7 @@ class AnthropicClient(BaseModelClient):
                 self.api_url,
                 json=body,
                 headers=headers,
-                timeout=aiohttp.ClientTimeout(total=300)
+                timeout=aiohttp.ClientTimeout(total=1600)
             ) as response:
                 if response.status != 200:
                     error_text = await response.text()
